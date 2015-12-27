@@ -12,7 +12,7 @@ ADD ./app.lua /app.lua
 
 ADD ./vendor /vendor
 
-RUN apk --update add openssl-dev wget
+RUN apk --update add openssl-dev pcre-dev zlib-dev wget build-base perl
 
 RUN \
   mkdir -p /vendor \
