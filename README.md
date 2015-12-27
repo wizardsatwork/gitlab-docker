@@ -1,2 +1,3 @@
 # resty
-nginx/openresty/lua stack for apis
+
+docker/nginx/openresty/lua example stack for apis
