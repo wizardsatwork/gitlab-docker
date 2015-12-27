@@ -1,51 +1,54 @@
 # magic/resty dockerfile
 # VERSION   0.0.1
 
-FROM alpine:edge
+FROM alpine:3.1
 
 MAINTAINER Wizards@Work <dev@wizardsat.work>
 ENV REFRESHED_AT 2015-27-12
 
-ENV NGINX_VERSION nginx-1.7.11
+ENV OPENRESTY_VERSION 1.7.10.1
+ENV PATH /usr/local/openresty/nginx/sbin:$PATH
 
-ADD ./app.lua /app.lua
-
-ADD ./vendor /vendor
-
-RUN apk --update add openssl-dev pcre-dev zlib-dev wget build-base perl
+RUN apk --update add ca-certificates pcre libgcc geoip \
+    --virtual build-deps \
+    build-base \
+    readline-dev \
+    ncurses-dev \
+    pcre-dev \
+    zlib-dev \
+    openssl-dev \
+    perl \
+    wget \
+    make \
+    tar \
+    geoip-dev && \
+    rm -rf /var/cache/apk/*
 
 RUN \
-  mkdir -p /vendor \
-  && cd /vendor \
-  && wget http://openresty.org/download/ngx_openresty-1.9.7.1.tar.gz \
-  && tar xvfz /vendor/ngx_openresty-1.9.7.1.tar.gz \
-  && cd /vendor/ngx_openresty-1.9.7.1 \
+  mkdir /build_tmp && cd /build_tmp \
+  && wget http://openresty.org/download/ngx_openresty-${OPENRESTY_VERSION}.tar.gz \
+  && tar xf ngx_openresty-${OPENRESTY_VERSION}.tar.gz \
+  && cd ngx_openresty-${OPENRESTY_VERSION} \
   && ./configure \
-    --with-luajit \
-    --with-http_addition_module \
-    --with-http_dav_module \
+    --with-pcre-jit \
+    --with-ipv6 \
     --with-http_geoip_module \
     --with-http_gzip_static_module \
-    --with-http_image_filter_module \
     --with-http_realip_module \
+    --with-http_ssl_module \
     --with-http_stub_status_module \
-    --with-http_sub_module \
-    --with-http_xslt_module \
-    --with-ipv6 \
-    --with-pcre-jit \
-  && make \
-  && make install \
-  && cd / \
-  && rm -rf /vendor
+    && make \
+    && make install \
+    && rm -rf /build_tmp
 
-# forward request and error logs to docker log collector
-RUN ln -sf /dev/stdout /var/log/nginx/access.log
-RUN ln -sf /dev/stderr /var/log/nginx/error.log
+VOLUME /nginx
 
-VOLUME ["/var/log/nginx"]
-
-WORKDIR /etc/nginx
+WORKDIR /nginx
 
 EXPOSE 80 443
 
-CMD ["nginx", "-g", "daemon off;"]
+RUN ls -l /nginx
+RUN ls -l /
+RUN ls -l /etc
+
+CMD ["nginx", "-p", "/nginx/", "-c", "conf/nginx.conf"]
