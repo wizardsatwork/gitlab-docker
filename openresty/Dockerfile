@@ -12,27 +12,10 @@ ADD ./app.lua /app.lua
 
 ADD ./vendor /vendor
 
-RUN \
-  apk --update add openssl-dev pcre-dev zlib-dev wget build-base \
-  && mkdir -p /tmp/src \
-  && cd /tmp/src \
-  && wget http://nginx.org/download/${NGINX_VERSION}.tar.gz \
-  && tar -zxvf ${NGINX_VERSION}.tar.gz \
-  && cd /tmp/src/${NGINX_VERSION} \
-  && ./configure \
-      --with-http_ssl_module \
-      --with-http_gzip_static_module \
-      --prefix=/etc/nginx \
-      --http-log-path=/var/log/nginx/access.log \
-      --error-log-path=/var/log/nginx/error.log \
-      --sbin-path=/usr/local/sbin/nginx \
-  && make \
-  && make install \
-  && apk del build-base \
-  && rm -rf /tmp/src \
-  && rm -rf /var/cache/apk/* \
+RUN apk --update add openssl-dev pcre-dev zlib-dev wget build-base
 
-  && tar xvfz /vendor/ngx_openresty-1.9.7.1.tar.gz \
+RUN \
+  tar xvfz /vendor/ngx_openresty-1.9.7.1.tar.gz \
   && cd /vendor/ngx_openresty-1.9.7.1 \
   && ./configure \
     --with-luajit \
@@ -49,7 +32,7 @@ RUN \
     --with-pcre-jit \
   && make \
   && make install \
-  && rm -rf /ngx_openresty*
+  && rm -rf /vendor
 
 # forward request and error logs to docker log collector
 RUN ln -sf /dev/stdout /var/log/nginx/access.log
