@@ -12,10 +12,12 @@ ADD ./app.lua /app.lua
 
 ADD ./vendor /vendor
 
-RUN apk --update add openssl-dev pcre-dev zlib-dev wget build-base
+RUN apk --update add openssl-dev wget
 
 RUN \
-  cd /vendor \
+  mkdir -p /vendor \
+  && cd /vendor \
+  && wget http://openresty.org/download/ngx_openresty-1.9.7.1.tar.gz \
   && tar xvfz /vendor/ngx_openresty-1.9.7.1.tar.gz \
   && cd /vendor/ngx_openresty-1.9.7.1 \
   && ./configure \
