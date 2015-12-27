@@ -8,6 +8,7 @@ OPENRESTY_FULL_PATH = ${OPENRESTY_DIR}/${VENDOR_DIR}/${OPENRESTY_TAR_FILE}
 REDIS_FULL_PATH = ${REDIS_DIR}/${VENDOR_DIR}/${REDIS_TAR_FILE}
 
 build-openresty:
+	cd openresty && make build;
 	docker build -t="magic/resty" ${OPENRESTY_DIR};
 
 build-redis:
