@@ -23,16 +23,6 @@ run-redis:
 
 run: ; ${MAKE} -j2 run-openresty run-redis
 
-install-openresty:
-	mkdir -p ${OPENRESTY_DIR}/${VENDOR_DIR}
-	wget \
-		-O ${OPENRESTY_FULL_PATH} \
-		https://openresty.org/download/${OPENRESTY_TAR_FILE} \
-		--no-clobber \
-	;
-
-install: ; ${MAKE} -j1 install-openresty
-
 clean:
 	rm -fr \
 		${OPENRESTY_DIR}/${VENDOR_DIR}/ \
