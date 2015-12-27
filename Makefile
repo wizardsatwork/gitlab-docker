@@ -7,9 +7,13 @@ REDIS_TAR_FILE = redis-stable.tar.gz
 OPENRESTY_FULL_PATH = ${OPENRESTY_DIR}/${VENDOR_DIR}/${OPENRESTY_TAR_FILE}
 REDIS_FULL_PATH = ${REDIS_DIR}/${VENDOR_DIR}/${REDIS_TAR_FILE}
 
-build:
+build-openresty:
 	docker build -t="magic/resty" ${OPENRESTY_DIR};
+
+build-redis:
 	docker build -t="magic/redis" ${REDIS_DIR};
+
+build: ; ${MAKE} -j2 build-openresty build-redis
 
 run:
 	docker run magic/resty;
