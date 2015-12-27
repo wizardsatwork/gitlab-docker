@@ -28,8 +28,8 @@ RUN \
   && rm -rf /tmp/src \
   && rm -rf /var/cache/apk/* \
 
-  && tar xvfz ./vendor/ngx_openresty-1.7.10.1.tar.gz \
-  && cd ./vendor/ngx_openresty-1.7.10.1 \
+  && tar xvfz ./vendor/ngx_openresty-1.9.7.1.tar.gz \
+  && cd ./vendor/ngx_openresty-1.9.7.1 \
   && ./configure \
     --with-luajit \
     --with-http_addition_module \
