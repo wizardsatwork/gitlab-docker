@@ -16,7 +16,7 @@ build-redis:
 build: ; ${MAKE} -j2 build-openresty build-redis
 
 run-openresty:
-	docker run magic/resty;
+	docker run -v /nginx:/nginx magic/resty;
 
 run-redis:
 	docker run magic/redis;
