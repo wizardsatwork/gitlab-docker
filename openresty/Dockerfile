@@ -22,8 +22,8 @@ RUN \
       --http-log-path=/var/log/nginx/access.log \
       --error-log-path=/var/log/nginx/error.log \
       --sbin-path=/usr/local/sbin/nginx \
-  && make
-  && make install
+  && make \
+  && make install \
   && apk del build-base \
   && rm -rf /tmp/src \
   && rm -rf /var/cache/apk/* \
