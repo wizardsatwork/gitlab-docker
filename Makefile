@@ -15,12 +15,13 @@ build-redis:
 
 build: ; ${MAKE} -j2 build-openresty build-redis
 
-run:
+run-openresty:
 	docker run magic/resty;
+
+run-redis:
 	docker run magic/redis;
 
-bla:
-	@test -d ${OPENRESTY_DIR} || echo "does not exist"
+run: ; ${MAKE} -j2 run-openresty run-redis
 
 install-openresty:
 	mkdir -p ${OPENRESTY_DIR}/${VENDOR_DIR}

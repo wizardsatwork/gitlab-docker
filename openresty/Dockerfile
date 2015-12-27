@@ -1,7 +1,7 @@
 # magic/resty dockerfile
 # VERSION   0.0.1
 
-FROM alpine:3.1
+FROM alpine:edge
 
 MAINTAINER Wizards@Work <dev@wizardsat.work>
 ENV REFRESHED_AT 2015-27-12
@@ -50,7 +50,6 @@ RUN \
 # forward request and error logs to docker log collector
 RUN ln -sf /dev/stdout /var/log/nginx/access.log
 RUN ln -sf /dev/stderr /var/log/nginx/error.log
-
 
 VOLUME ["/var/log/nginx"]
 
