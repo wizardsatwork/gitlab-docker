@@ -4,28 +4,17 @@
 # https://github.com/dockerfile/redis
 #
 
-# Pull base image.
-FROM dockerfile/ubuntu
+FROM alpine:edge
 
-# Install Redis.
-RUN \
-  cd /tmp && \
-  wget http://download.redis.io/redis-stable.tar.gz && \
-  tar xvzf redis-stable.tar.gz && \
-  cd redis-stable && \
-  make && \
-  make install && \
-  cp -f src/redis-sentinel /usr/local/bin && \
-  mkdir -p /etc/redis && \
-  cp -f *.conf /etc/redis && \
-  rm -rf /tmp/redis-stable* && \
-  sed -i 's/^\(bind .*\)$/# \1/' /etc/redis/redis.conf && \
-  sed -i 's/^\(daemonize .*\)$/# \1/' /etc/redis/redis.conf && \
-  sed -i 's/^\(dir .*\)$/# \1\ndir \/data/' /etc/redis/redis.conf && \
-  sed -i 's/^\(logfile .*\)$/# \1/' /etc/redis/redis.conf
+MAINTAINER Wizards@Work <dev@wizardsat.work>
+ENV REFRESHED_AT 2015-27-12
 
-# Define mountable directories.
-VOLUME ["/data"]
+RUN echo "http://dl-4.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
+RUN apk update && \
+  apk add --update redis && rm -rf /var/cache/apk/* && \
+  adduser -h /home/wizard -s /bin/sh -u 40561 -D wizard wizard
+
+USER wizard
 
 # Define working directory.
 WORKDIR /data
