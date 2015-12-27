@@ -1,7 +1,7 @@
 # magic/resty dockerfile
 # VERSION   0.0.1
 
-FROM alpine:3.1
+FROM alpine:edge
 
 MAINTAINER Wizards@Work <dev@wizardsat.work>
 ENV REFRESHED_AT 2015-27-12
@@ -28,8 +28,8 @@ RUN \
   && rm -rf /tmp/src \
   && rm -rf /var/cache/apk/* \
 
-  && tar xvfz ./vendor/ngx_openresty-1.7.10.1.tar.gz \
-  && cd ./vendor/ngx_openresty-1.7.10.1 \
+  && tar xvfz ./vendor/ngx_openresty-1.9.7.1.tar.gz \
+  && cd ./vendor/ngx_openresty-1.9.7.1 \
   && ./configure \
     --with-luajit \
     --with-http_addition_module \
@@ -50,7 +50,6 @@ RUN \
 # forward request and error logs to docker log collector
 RUN ln -sf /dev/stdout /var/log/nginx/access.log
 RUN ln -sf /dev/stderr /var/log/nginx/error.log
-
 
 VOLUME ["/var/log/nginx"]
 
