@@ -6,3 +6,7 @@ build:
 run:
 	docker run magic/resty;
 	docker run magic/redis;
+
+
+install:
+	wget https://openresty.org/download/ngx_openresty-1.9.7.1.tar.gz ./openresty
