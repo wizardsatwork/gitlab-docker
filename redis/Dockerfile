@@ -19,6 +19,8 @@ USER wizard
 # Define working directory.
 WORKDIR /data
 
+ADD ./redis.conf /etc/redis/redis.conf
+
 # Define default command.
 CMD ["redis-server", "/etc/redis/redis.conf"]
 

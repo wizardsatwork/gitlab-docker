@@ -8,6 +8,8 @@ ENV REFRESHED_AT 2015-27-12
 
 ENV NGINX_VERSION nginx-1.7.11
 
+ADD ./app.lua /app.lua
+
 RUN \
   apk --update add openssl-dev pcre-dev zlib-dev wget build-base \
   && mkdir -p /tmp/src \
