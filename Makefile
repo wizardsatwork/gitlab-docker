@@ -31,15 +31,7 @@ install-openresty:
 		--no-clobber \
 	;
 
-install-redis:
-	mkdir -p ${REDIS_DIR}/${VENDOR_DIR}
-	wget \
-		-O ${REDIS_FULL_PATH} \
-		http://download.redis.io/${REDIS_TAR_FILE} \
-		--no-clobber \
-	;
-
-install: ; ${MAKE} -j2 install-redis install-openresty
+install: ; ${MAKE} -j1 install-openresty
 
 clean:
 	rm -fr \

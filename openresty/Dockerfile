@@ -10,6 +10,8 @@ ENV NGINX_VERSION nginx-1.7.11
 
 ADD ./app.lua /app.lua
 
+ADD ./vendor /vendor
+
 RUN \
   apk --update add openssl-dev pcre-dev zlib-dev wget build-base \
   && mkdir -p /tmp/src \
@@ -30,8 +32,8 @@ RUN \
   && rm -rf /tmp/src \
   && rm -rf /var/cache/apk/* \
 
-  && tar xvfz ./vendor/ngx_openresty-1.9.7.1.tar.gz \
-  && cd ./vendor/ngx_openresty-1.9.7.1 \
+  && tar xvfz /vendor/ngx_openresty-1.9.7.1.tar.gz \
+  && cd /vendor/ngx_openresty-1.9.7.1 \
   && ./configure \
     --with-luajit \
     --with-http_addition_module \
