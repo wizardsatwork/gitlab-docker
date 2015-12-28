@@ -64,7 +64,7 @@ RUN luarocks-5.1 install lapis
 ADD ./out/lua/ /srv/lua/
 
 # Remove the default Nginx configuration file
-RUN rm -v /etc/nginx/nginx.conf /etc/nginx/sites-enabled/*
+RUN rm -fv /etc/nginx/nginx.conf /etc/nginx/sites-enabled/*
 
 # Copy the precompiled config
 ADD out/nginx/nginx.conf /etc/nginx/
