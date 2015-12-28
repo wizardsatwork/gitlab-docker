@@ -1,7 +1,7 @@
 # magic/resty dockerfile
 # VERSION   0.0.1
 
-FROM alpine:3.1
+FROM alpine:3.3
 
 MAINTAINER Wizards@Work <dev@wizardsat.work>
 ENV REFRESHED_AT 2015-27-12
@@ -33,7 +33,9 @@ RUN \
     make \
     tar \
     geoip-dev \
-  && apk --update add lua5.1 luarocks5.1 \ 
+    git \
+  && apk --update add lua5.1 luarocks5.1 lua5.1-dev \ 
+  && apk --update add unzip \
   && rm -rf /var/cache/apk/*
 
 #install openresty
