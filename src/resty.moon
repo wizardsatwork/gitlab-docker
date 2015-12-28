@@ -1,6 +1,9 @@
 -- app.moon
 lapis = require "lapis"
+moon = require "moon"
 
 class extends lapis.Application
   "/": =>
-    "Welcome to Lapis #{require "lapis.version"}!"
+    moon.p {route: "/", description: "loading root route"}
+    "Welcome to Magic #{require "lapis.version"}! "
+
