@@ -39,8 +39,11 @@ docker-build:
 docker-run:
 	docker run -v /nginx:/nginx magic/${LIB_NAME}
 
-server:
-	lapis server
+server-dev:
+	lapis server development;
+
+server-production:
+	lapis server production;
 
 build: nginx-build moon-build docker-build
 
@@ -57,7 +60,8 @@ moon-build - build moonscript to OUT_DIR/lua \n\
 docker-build - build docker container based on files in out \n\
 build - build nginx and lua, then build docker container\n\
 moon-watch - watch changes to moon files and recompile out directory on changes \n\
-server - starts a lapis server (not implemented yet) \n\
+server-dev - starts a lapis server in development mode (not implemented yet) \n\
+server-production - starts a lapis server in production mode (not implemented yet) \n\
 docker-run - runs the prebuilt docker container \n\
 clean - removes the out directory \n\
 lint - lints the moonscript sources \n\
