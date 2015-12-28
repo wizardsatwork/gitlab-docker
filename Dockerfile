@@ -57,12 +57,21 @@ RUN rm -rf /build_tmp
 
 RUN luarocks install lapis
 
-ADD ./out /srv/lua/
+ADD ./out/lua/ /srv/lua/
 
-VOLUME /nginx
+# Remove the default Nginx configuration file
+RUN rm -v /etc/nginx/nginx.conf /etc/nginx/sites-enabled/*
 
-WORKDIR /nginx
+# Copy the precompiled config
+ADD out/nginx/nginx.conf /etc/nginx/
+ADD out/nginx/sites-enabled/* /etc/nginx/sites-enabled/
 
+# Expose ports
 EXPOSE 80 443
 
-CMD ["nginx", "-p", "/nginx/", "-c", "conf/nginx.conf"]
+# Test nginx config
+RUN nginx -t
+
+# Set the default command to execute
+# when creating a new container
+CMD service nginx start
