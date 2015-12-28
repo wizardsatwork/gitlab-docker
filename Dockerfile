@@ -29,6 +29,7 @@ RUN \
     openssl-dev \
     perl \
     wget \
+    curl \
     make \
     tar \
     geoip-dev \
