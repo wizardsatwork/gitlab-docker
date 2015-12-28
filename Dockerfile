@@ -30,9 +30,9 @@ RUN \
     perl \
     wget \
     make \
-    luarocks \
     tar \
     geoip-dev \
+  && apk --update add lua5.1 luarocks5.1 \ 
   && rm -rf /var/cache/apk/*
 
 #install openresty
@@ -51,11 +51,12 @@ RUN \
     --with-http_ssl_module \
     --with-http_stub_status_module \
     && make \
-    && make install \
+    && make install
 
 RUN rm -rf /build_tmp
 
-RUN luarocks install lapis
+RUN luarocks-5.1 search lapis
+RUN luarocks-5.1 install lapis
 
 ADD ./out/lua/ /srv/lua/
 

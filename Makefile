@@ -12,35 +12,32 @@ LIB_NAME = resty
 	moon-lint \
 	server \
 	clean \
-	help \
-	;
+	help
 
 nginx-build:
-	mkdir -p ${OUT_DIR}/nginx;
-	cp -r nginx/* ${OUT_DIR}/nginx/;
+	mkdir -p ${OUT_DIR}/nginx
+	cp -r nginx/* ${OUT_DIR}/nginx/
 
 moon-build:
 	mkdir -p ${OUT_DIR}/lua;
 	cd ./src/ && moonc \
 		-t ../${OUT_DIR}/lua/ \
-		./* \
-	;
+		./*
 
 moon-watch:
 	moonc \
 		-w src/* \
 		-o ${OUT_DIR}/lua/${LIB_NAME}.lua \
 		${SRC_DIR}/${LIB_NAME}.moon
-	;
 
 moon-lint:
 	moonc -l ${SRC_DIR}/*
 
 docker-build:
-	docker build -t="magic/${LIB_NAME}" .;
+	docker build -t="magic/${LIB_NAME}" .
 
 docker-run:
-	docker run -v /nginx:/nginx magic/${LIB_NAME};
+	docker run -v /nginx:/nginx magic/${LIB_NAME}
 
 server-dev:
 	lapis server development;
@@ -54,8 +51,7 @@ all: build docker-run
 
 clean:
 	rm -fr \
-		${OUT_DIR} \
-	;
+		${OUT_DIR}
 
 help:
 	@echo "\
@@ -69,5 +65,5 @@ server-production - starts a lapis server in production mode (not implemented ye
 docker-run - runs the prebuilt docker container \n\
 clean - removes the out directory \n\
 lint - lints the moonscript sources \n\
-";
+"
 
