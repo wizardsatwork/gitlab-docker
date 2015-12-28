@@ -21,9 +21,9 @@ nginx-build:
 
 moon-build:
 	mkdir -p ${OUT_DIR}/lua;
-	moonc \
-		-o ${OUT_DIR}/lua/${LIB_NAME}.lua \
-		src/${LIB_NAME}.moon \
+	cd ./src/ && moonc \
+		-t ../${OUT_DIR}/lua/ \
+		./* \
 	;
 
 moon-watch:
