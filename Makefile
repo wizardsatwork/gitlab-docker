@@ -40,7 +40,7 @@ docker-build:
 	docker build -t="magic/${LIB_NAME}" .;
 
 docker-run:
-	docker run magic/${LIB_NAME};
+	docker run -v /nginx:/nginx magic/${LIB_NAME};
 
 server:
 	lapis server
