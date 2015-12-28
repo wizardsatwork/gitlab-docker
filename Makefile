@@ -1,31 +1,47 @@
-REDIS_DIR = ./redis
-OPENRESTY_DIR = ./openresty
-VENDOR_DIR = vendor
-OPENRESTY_TAR_FILE = ngx_openresty-1.9.7.1.tar.gz
-REDIS_TAR_FILE = redis-stable.tar.gz
+OUT_DIR = ./out
+SRC_DIR = ./src
+LIB_NAME = resty
 
-OPENRESTY_FULL_PATH = ${OPENRESTY_DIR}/${VENDOR_DIR}/${OPENRESTY_TAR_FILE}
-REDIS_FULL_PATH = ${REDIS_DIR}/${VENDOR_DIR}/${REDIS_TAR_FILE}
+.PHONY: \
+	build \
+	docker-build \
+	watch \
+	server \
+	install \
+	install-lapis \
+	install-moonscript \
+	clean \
+	lint \
+	;
 
-build-openresty:
-	cd openresty && make build;
-	docker build -t="magic/resty" ${OPENRESTY_DIR};
 
-build-redis:
-	docker build -t="magic/redis" ${REDIS_DIR};
+build:
+	mkdir -p ${OUT_DIR};
+	moonc \
+		-o ${OUT_DIR}/${LIB_NAME}.lua \
+		src/${LIB_NAME}.moon \
+	;
 
-build: ; ${MAKE} -j2 build-openresty build-redis
+docker-build:
+	docker build -t="magic/${LIB_NAME}" .;
 
-run-openresty:
-	docker run magic/resty;
+watch:
+	moonc \
+		-w src/app.moon \
+		-o ${OUT_DIR}/${LIB_NAME}.lua \
+		${SRC_DIR}/${LIB_NAME}.moon
+	;
 
-run-redis:
-	docker run magic/redis;
+server:
+	lapis server
 
-run: ; ${MAKE} -j2 run-openresty run-redis
+lint:
+	moonc -l ${SRC_DIR}/${LIB_NAME}.moon
+
+run:
+	docker run magic/${LIB_NAME};
 
 clean:
 	rm -fr \
-		${OPENRESTY_DIR}/${VENDOR_DIR}/ \
-		${REDIS_DIR}/${VENDOR_DIR}/ \
+		${OUT_DIR} \
 	;
