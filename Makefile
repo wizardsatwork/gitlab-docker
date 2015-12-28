@@ -4,14 +4,14 @@ LIB_NAME = resty
 
 .PHONY: \
 	nginx-build \
-	moon-build \
 	docker-build \
-	build \
-	moon-watch \
-	server \
 	docker-run
+	build \
+	moon-build \
+	moon-watch \
+	moon-lint \
+	server \
 	clean \
-	lint \
 	help \
 	;
 
@@ -26,11 +26,6 @@ moon-build:
 		src/${LIB_NAME}.moon \
 	;
 
-docker-build:
-	docker build -t="magic/${LIB_NAME}" .;
-
-build: nginx-build moon-build docker-build
-
 moon-watch:
 	moonc \
 		-w src/* \
@@ -38,14 +33,21 @@ moon-watch:
 		${SRC_DIR}/${LIB_NAME}.moon
 	;
 
-server:
-	lapis server
-
 moon-lint:
-	moonc -l ${SRC_DIR}/${LIB_NAME}.moon
+	moonc -l ${SRC_DIR}/*
+
+docker-build:
+	docker build -t="magic/${LIB_NAME}" .;
 
 docker-run:
 	docker run magic/${LIB_NAME};
+
+server:
+	lapis server
+
+build: nginx-build moon-build docker-build
+
+all: build docker-run
 
 clean:
 	rm -fr \
