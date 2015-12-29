@@ -37,13 +37,27 @@ docker-build:
 	docker build -t="magic/${LIB_NAME}" .
 
 docker-run:
-	docker run -v /nginx:/nginx magic/${LIB_NAME}
+	docker run --name ${LIB_NAME} magic/${LIB_NAME}
 
+# removes ALL docker containers
+docker-rm-containers:
+	containers=$(shell docker ps -a -q)
+ifneq (${containers}"t","t")
+	@echo "removing containers ${containers}" && \
+	docker rm ${containers}
+endif
+
+# removes ALL docker images
+docker-rm-images:
+	docker rmi $(shell docker images -q)
+
+# start lua lapis server in development mode
 server-dev:
-	lapis server development;
+	lapis server development
 
+# start lua lapis server in production mode
 server-production:
-	lapis server production;
+	lapis server production
 
 build: nginx-build moon-build docker-build
 
@@ -66,4 +80,3 @@ docker-run - runs the prebuilt docker container \n\
 clean - removes the out directory \n\
 lint - lints the moonscript sources \n\
 "
-
