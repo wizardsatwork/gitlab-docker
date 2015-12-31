@@ -34,9 +34,15 @@ RUN \
     tar \
     geoip-dev \
     git \
-  && apk --update add lua5.1 luarocks5.1 lua5.1-dev \ 
-  && apk --update add unzip \
-  && rm -rf /var/cache/apk/*
+    unzip
+
+RUN apk \
+        add --update \
+        lua5.1 \
+        lua5.1-dev \
+        luarocks5.1
+
+RUN rm -rf /var/cache/apk/*
 
 #install openresty
 RUN \
@@ -58,7 +64,6 @@ RUN \
 
 RUN rm -rf /build_tmp
 
-RUN luarocks-5.1 search lapis
 RUN luarocks-5.1 install lapis
 
 ADD ./out/lua/ /srv/lua/
@@ -70,6 +75,9 @@ RUN rm -fv /etc/nginx/nginx.conf /etc/nginx/sites-enabled/*
 ADD out/nginx/nginx.conf /etc/nginx/
 ADD out/nginx/sites-enabled/* /etc/nginx/sites-enabled/
 
+#RUN ln -sf /dev/stdout /var/log/nginx/access.log && \
+#    ln -sf /dev/stderr /var/log/nginx/error.log
+
 # Expose ports
 EXPOSE 80 443
 
@@ -78,4 +86,4 @@ RUN nginx -t
 
 # Set the default command to execute
 # when creating a new container
-CMD service nginx start
+CMD rc-service nginx start
