@@ -39,7 +39,10 @@ docker-build:
 	docker build -t="magic/${LIB_NAME}" .
 
 docker-run:
-	docker run --name ${LIB_NAME} magic/${LIB_NAME}
+	docker run \
+		--name ${LIB_NAME} \
+		--rm \
+		magic/${LIB_NAME}
 
 # removes ALL docker containers
 docker-rm-containers:
