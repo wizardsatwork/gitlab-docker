@@ -1,20 +1,21 @@
 server {
-  listen ${{PORT}};
+  listen 80;
   server_name localhost
-  lua_code_cache ${{CODE_CACHE}};
+  lua_code_cache off;
 
   location / {
     default_type text/html;
+
     content_by_lua '
       require("lapis").serve("app")
     ';
   }
 
-  location /static/ {
-    alias static/;
+  location /assets/ {
+    alias assets/;
   }
 
   location /favicon.ico {
-    alias static/favicon.ico;
+    alias assets/favicon.ico;
   }
 }
