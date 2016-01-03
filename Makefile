@@ -21,19 +21,19 @@ asset-build:
 	cp -r ${SRC_DIR}/assets ${OUT_DIR}
 
 nginx-build:
-	mkdir -p ${OUT_DIR}/nginx
-	cp -r ${NGINX_SRC_DIR}/* ${OUT_DIR}/nginx/
+	mkdir -p ${OUT_DIR}/
+	cp -r ${NGINX_SRC_DIR}/* ${OUT_DIR}/
 
 moon-build:
-	mkdir -p ${OUT_DIR}/lua;
+	mkdir -p ${OUT_DIR};
 	cd ${LUA_SRC_DIR} && moonc \
-		-t ../../${OUT_DIR}/lua/ \
+		-t ../../${OUT_DIR}/ \
 		./*
 
 moon-watch:
 	moonc \
 		-w src/* \
-		-o ${OUT_DIR}/lua/${LIB_NAME}.lua \
+		-o ${OUT_DIR}/${LIB_NAME}.lua \
 		${LUA_SRC_DIR}/${LIB_NAME}.moon
 
 moon-lint:

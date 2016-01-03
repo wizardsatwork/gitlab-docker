@@ -69,26 +69,14 @@ RUN luarocks-5.1 install lapis
 
 ENV TARGET_DIR /home
 
-# Remove the default Nginx configuration file
-#RUN rm -frv ${TARGET_DIR}/*
-
-# add lua sources
-ADD ./out/lua/ ${TARGET_DIR}
-
-# Copy the precompiled config
-ADD out/nginx/nginx.conf out/nginx/mime.types ${TARGET_DIR}/
-
-# add enabled hosts
-ADD out/nginx/sites-enabled/* ${TARGET_DIR}/sites-enabled/
-
-# add static files
-ADD out/assets/* ${TARGET_DIR}/assets/
+# add sources
+ADD ./out/* ${TARGET_DIR}/
 
 # add log directory
 RUN mkdir ${TARGET_DIR}/logs
 
 # pipe access logs to stdout
-#RUN ln -sf /dev/stdout ${TARGET_DIR}/logs/access.log
+RUN ln -sf /dev/stdout ${TARGET_DIR}/logs/access.log
 
 # test config
 RUN nginx -t
