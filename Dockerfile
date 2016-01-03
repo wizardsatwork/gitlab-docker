@@ -67,35 +67,35 @@ RUN rm -rf /build_tmp
 
 RUN luarocks-5.1 install lapis
 
-ADD ./out/lua/ /srv/lua/
-
-ENV NGINX_CONF_DIR /usr/local/openresty/nginx/conf
-
-
-RUN ls -l ${NGINX_CONF_DIR}
+ENV TARGET_DIR /home
 
 # Remove the default Nginx configuration file
-RUN rm -frv ${NGINX_CONF_DIR}/*
+#RUN rm -frv ${TARGET_DIR}/*
+
+# add lua sources
+ADD ./out/lua/ ${TARGET_DIR}
 
 # Copy the precompiled config
-ADD out/nginx/nginx.conf out/nginx/mime.types ${NGINX_CONF_DIR}/
+ADD out/nginx/nginx.conf out/nginx/mime.types ${TARGET_DIR}/
 
-ADD out/nginx/sites-enabled/* ${NGINX_CONF_DIR}/sites-enabled/
+# add enabled hosts
+ADD out/nginx/sites-enabled/* ${TARGET_DIR}/sites-enabled/
 
-RUN ls -l ${NGINX_CONF_DIR}
+# add static files
+ADD out/assets/* ${TARGET_DIR}/assets/
 
-RUN cat ${NGINX_CONF_DIR}/nginx.conf
+# add log directory
+RUN mkdir ${TARGET_DIR}/logs
 
-#RUN ln -sf /dev/stdout /var/log/nginx/access.log && \
-#    ln -sf /dev/stderr /var/log/nginx/error.log
+# pipe access logs to stdout
+#RUN ln -sf /dev/stdout ${TARGET_DIR}/logs/access.log
+
+# test config
+RUN nginx -t
 
 # Expose ports
 EXPOSE 80 443
 
-# Test nginx config
-#RUN nginx -t
-
 # Set the default command to execute
 # when creating a new container
-CMD cd /home && lapis server production
-
+CMD cd ${TARGET_DIR} && lapis server production
