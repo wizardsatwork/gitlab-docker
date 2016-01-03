@@ -1,5 +1,7 @@
 OUT_DIR = ./out
 SRC_DIR = ./src
+NGINX_SRC_DIR = ${SRC_DIR}/nginx
+LUA_SRC_DIR = ${SRC_DIR}/lua
 LIB_NAME = resty
 
 .PHONY: \
@@ -16,22 +18,22 @@ LIB_NAME = resty
 
 nginx-build:
 	mkdir -p ${OUT_DIR}/nginx
-	cp -r nginx/* ${OUT_DIR}/nginx/
+	cp -r ${NGINX_SRC_DIR}/* ${OUT_DIR}/nginx/
 
 moon-build:
 	mkdir -p ${OUT_DIR}/lua;
-	cd ./src/ && moonc \
-		-t ../${OUT_DIR}/lua/ \
+	cd ${LUA_SRC_DIR} && moonc \
+		-t ../../${OUT_DIR}/lua/ \
 		./*
 
 moon-watch:
 	moonc \
 		-w src/* \
 		-o ${OUT_DIR}/lua/${LIB_NAME}.lua \
-		${SRC_DIR}/${LIB_NAME}.moon
+		${LUA_SRC_DIR}/${LIB_NAME}.moon
 
 moon-lint:
-	moonc -l ${SRC_DIR}/*
+	moonc -l ${LUA_SRC_DIR}/*
 
 docker-build:
 	docker build -t="magic/${LIB_NAME}" .

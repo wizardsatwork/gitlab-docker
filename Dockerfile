@@ -35,7 +35,7 @@ RUN \
     geoip-dev \
     git \
     unzip \
-	openrc
+    openrc
 
 RUN apk \
         add --update \
@@ -69,12 +69,22 @@ RUN luarocks-5.1 install lapis
 
 ADD ./out/lua/ /srv/lua/
 
+ENV NGINX_CONF_DIR /usr/local/openresty/nginx/conf
+
+
+RUN ls -l ${NGINX_CONF_DIR}
+
 # Remove the default Nginx configuration file
-RUN rm -fv /etc/nginx/nginx.conf /etc/nginx/sites-enabled/*
+RUN rm -frv ${NGINX_CONF_DIR}/*
 
 # Copy the precompiled config
-ADD out/nginx/nginx.conf /etc/nginx/
-ADD out/nginx/sites-enabled/* /etc/nginx/sites-enabled/
+ADD out/nginx/nginx.conf out/nginx/mime.types ${NGINX_CONF_DIR}/
+
+ADD out/nginx/sites-enabled/* ${NGINX_CONF_DIR}/sites-enabled/
+
+RUN ls -l ${NGINX_CONF_DIR}
+
+RUN cat ${NGINX_CONF_DIR}/nginx.conf
 
 #RUN ln -sf /dev/stdout /var/log/nginx/access.log && \
 #    ln -sf /dev/stderr /var/log/nginx/error.log
@@ -87,11 +97,5 @@ EXPOSE 80 443
 
 # Set the default command to execute
 # when creating a new container
-#CMD rc-service nginx start
-
-# Make a new lapis server config:
-CMD cd /home && lapis new
-
-# Start the lapis server:
-CMD cd /home && lapis server 
+CMD cd /home && lapis server production
 
