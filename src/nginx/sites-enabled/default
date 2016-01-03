@@ -1,7 +1,7 @@
 server {
-  listen 80;
-  server_name localhost
-  lua_code_cache off;
+  listen ${{PORT}};
+  server_name localhost;
+  lua_code_cache ${{CODE_CACHE}};
 
   location / {
     default_type text/html;
@@ -11,11 +11,29 @@ server {
     ';
   }
 
-  location /assets/ {
+  error_page 404 /index.html;
+}
+
+server {
+  listen ${{PORT}};
+
+  server_name
+    s1.localhost
+    s2.localhost
+    s3.localhost
+    s4.localhost
+    s5.localhost
+    s6.localhost
+    s7.localhost
+    s8.localhost;
+
+  location / {
     alias assets/;
   }
 
   location /favicon.ico {
     alias assets/favicon.ico;
   }
+
+  error_page 404 /index.html;
 }
