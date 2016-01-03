@@ -5,15 +5,22 @@ LUA_SRC_DIR = ${SRC_DIR}/lua
 LIB_NAME = resty
 
 .PHONY: \
+	asset-build \
 	nginx-build \
 	docker-build \
-	docker-run
+	docker-run \
+	docker-rm \
+	docker-rm-containers \
+	docker-rm-images \
+	docker-connect \
 	build \
 	moon-build \
 	moon-watch \
 	moon-lint \
-	server \
+	server-dev \
+	server-production \
 	clean \
+	all \
 	help
 
 asset-build:
@@ -84,14 +91,23 @@ clean:
 
 help:
 	@echo "\
+make: \n\
+all - build, then run \n\
+build - build nginx and lua, then build docker container\n\
+docker-run - runs the prebuilt docker container \n\
+clean - removes the out directory \n\
+\n\
+\n\
+asset-build - copy static files \n\
 nginx-build - build nginx config files to OUT_DIR/nginx \n\
 moon-build - build moonscript to OUT_DIR/lua \n\
 docker-build - build docker container based on files in out \n\
-build - build nginx and lua, then build docker container\n\
+docker-rm - remove the resty container \n\
+docker-rm-containers - remove all docker containers \n\
+docker-rm-images - remove all docker images \n\
+docker-connect - connect to the docker container \n\
 moon-watch - watch changes to moon files and recompile out directory on changes \n\
 server-dev - starts a lapis server in development mode (not implemented yet) \n\
 server-production - starts a lapis server in production mode (not implemented yet) \n\
-docker-run - runs the prebuilt docker container \n\
-clean - removes the out directory \n\
 lint - lints the moonscript sources \n\
 "
