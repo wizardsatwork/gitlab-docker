@@ -1,6 +1,6 @@
 import Widget from require "lapis.html"
 
-require "utils"
+import u from require "utils"
 
 class Layout extends Widget
   content: =>
