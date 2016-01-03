@@ -34,7 +34,8 @@ RUN \
     tar \
     geoip-dev \
     git \
-    unzip
+    unzip \
+	openrc
 
 RUN apk \
         add --update \
@@ -82,8 +83,15 @@ ADD out/nginx/sites-enabled/* /etc/nginx/sites-enabled/
 EXPOSE 80 443
 
 # Test nginx config
-RUN nginx -t
+#RUN nginx -t
 
 # Set the default command to execute
 # when creating a new container
-CMD rc-service nginx start
+#CMD rc-service nginx start
+
+# Make a new lapis server config:
+CMD cd /home && lapis new
+
+# Start the lapis server:
+CMD cd /home && lapis server 
+
