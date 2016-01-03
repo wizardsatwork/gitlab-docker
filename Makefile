@@ -16,6 +16,10 @@ LIB_NAME = resty
 	clean \
 	help
 
+asset-build:
+	mkdir -p ${OUT_DIR}
+	cp -r ${SRC_DIR}/assets ${OUT_DIR}
+
 nginx-build:
 	mkdir -p ${OUT_DIR}/nginx
 	cp -r ${NGINX_SRC_DIR}/* ${OUT_DIR}/nginx/
@@ -56,6 +60,12 @@ endif
 docker-rm-images:
 	docker rmi $(shell docker images -q)
 
+docker-connect:
+	docker run -it magic/${LIB_NAME} sh
+
+docker-rm:
+	docker rm -f resty
+
 # start lua lapis server in development mode
 server-dev:
 	lapis server development
@@ -64,7 +74,7 @@ server-dev:
 server-production:
 	lapis server production
 
-build: nginx-build moon-build docker-build
+build: asset-build nginx-build moon-build docker-build
 
 all: build docker-run
 
