@@ -78,12 +78,11 @@ RUN mkdir ${TARGET_DIR}/logs
 # pipe access logs to stdout
 RUN ln -sf /dev/stdout ${TARGET_DIR}/logs/access.log
 
-# test config
-RUN nginx -t
-
 # Expose ports
 EXPOSE 80 443
 
+WORKDIR ${TARGET_DIR}
+
 # Set the default command to execute
 # when creating a new container
-CMD cd ${TARGET_DIR} && lapis server production
+CMD lapis server production
