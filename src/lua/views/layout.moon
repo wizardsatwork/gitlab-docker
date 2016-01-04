@@ -1,7 +1,5 @@
 import Widget from require "lapis.html"
 
-import u from require "utils"
-
 class Layout extends Widget
   content: =>
     html_5 ->
@@ -11,7 +9,7 @@ class Layout extends Widget
 
         link
           rel: "icon"
-          href: u.cdn_host "/favicon.ico"
+          href: "/favicon.ico"
 
         meta
           name: "description"
@@ -19,3 +17,5 @@ class Layout extends Widget
 
       body id: "♥", ->
         @content_for "inner"
+
+        script src: "/js/index.js"
