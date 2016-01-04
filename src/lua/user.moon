@@ -22,6 +22,6 @@ class extends lapis.Application
     if @params.js == "0"
       return redirect_to: "/"
 
-    print u.http_request {endpoint: "http://bing.com"}
+    --print u.http_request {endpoint: "http://crack.plumbing"}
 
     status: 200, json: {status: "OK"}
