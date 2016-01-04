@@ -23,71 +23,75 @@ LIB_NAME = resty
 	all \
 	help
 
+all: build run
+
 asset-build:
-	mkdir -p ${OUT_DIR}
-	cp -r ${SRC_DIR}/assets ${OUT_DIR}
+	@mkdir -p ${OUT_DIR}
+	@cp -r ${SRC_DIR}/assets/ ${OUT_DIR}
 
 nginx-build:
-	mkdir -p ${OUT_DIR}/
-	cp -r ${NGINX_SRC_DIR}/* ${OUT_DIR}/
+	@mkdir -p ${OUT_DIR}/
+	@cp -r ${NGINX_SRC_DIR}/* ${OUT_DIR}/
 
 moon-build:
-	mkdir -p ${OUT_DIR};
-	cd ${LUA_SRC_DIR} && moonc \
+	@mkdir -p ${OUT_DIR};
+	@cd ${LUA_SRC_DIR} && moonc \
 		-t ../../${OUT_DIR}/ \
 		./*
 
 moon-watch:
-	moonc \
+	@moonc \
 		-w src/* \
 		-o ${OUT_DIR}/${LIB_NAME}.lua \
 		${LUA_SRC_DIR}/${LIB_NAME}.moon
 
 moon-lint:
-	moonc -l ${LUA_SRC_DIR}/*
+	@moonc -l ${LUA_SRC_DIR}/*
 
 docker-build:
-	docker build -t="magic/${LIB_NAME}" .
+	@docker build -t="magic/${LIB_NAME}" .
 
 docker-run:
-	docker run \
+	@docker run \
 		--name ${LIB_NAME} \
 		--rm \
-		magic/${LIB_NAME}
+		magic/${LIB_NAME} \
+		lapis server production
+
+run: docker-run
 
 # removes ALL docker containers
 docker-rm-containers:
-	containers=$(shell docker ps -a -q)
+	@containers=$(shell docker ps -a -q)
 ifneq (${containers}"t","t")
-	@echo "removing containers ${containers}" && \
+	echo "removing containers ${containers}" && \
 	docker rm ${containers}
 endif
 
 # removes ALL docker images
 docker-rm-images:
-	docker rmi $(shell docker images -q)
+	@docker rmi $(shell docker images -q)
 
 docker-connect:
-	docker run -it magic/${LIB_NAME} sh
+	@docker run -it magic/${LIB_NAME} sh
 
 docker-rm:
-	docker rm -f resty
+	@docker rm -f resty
 
 # start lua lapis server in development mode
 server-dev:
-	lapis server development
+	@lapis server development
 
 # start lua lapis server in production mode
 server-production:
-	lapis server production
+	@lapis server production
 
 build: asset-build nginx-build moon-build docker-build
 
-all: build docker-run
-
 clean:
-	rm -fr \
+	@rm -fr \
 		${OUT_DIR}
+	@echo "removed ./out"
 
 help:
 	@echo "\
