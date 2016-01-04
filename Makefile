@@ -79,14 +79,15 @@ docker-rm:
 	@docker rm -f resty
 
 # start lua lapis server in development mode
-server-dev:
-	@lapis server development
+server: build-source
+	@cd out && sudo lapis server development
 
 # start lua lapis server in production mode
 server-production:
-	@lapis server production
+	@cd out && sudo lapis server production
 
-build: asset-build nginx-build moon-build docker-build
+build-source: asset-build nginx-build moon-build
+build: build-source docker-build
 
 clean:
 	@rm -fr \
