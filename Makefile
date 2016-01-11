@@ -33,7 +33,6 @@ help:
 	@echo " \
 Usage: \n\
   # run docker container, exposing port 80, 443 and 2222 for ssh \n\
-  # todo: replace 2222 with 22 for machine that has no ssh installed natively. \n\
   make \n\
 \n\
   # stop container \n\

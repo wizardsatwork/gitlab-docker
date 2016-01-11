@@ -7,6 +7,9 @@ runs a dockerized gitlab instance
   # run docker container
   make
 
+  #then just:
+  xdg-open http://gitlab
+
   # stop container
   make stop
 
@@ -17,3 +20,6 @@ runs a dockerized gitlab instance
   make update
 
 ```
+
+#### Todo:
+replace port 2222 with 22 for machine that has no ssh installed natively once we set that machine up.
