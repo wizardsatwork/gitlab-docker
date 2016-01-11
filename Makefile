@@ -10,16 +10,14 @@ stop:
 	@docker stop gitlab
 
 remove:
-	@docker rm -f gitlab || echo "container does not exist"
+	@docker rm -f gitlab && echo "removed container" || echo "container does not exist"
 
 update: remove
 	@echo 'start update'
 	@docker pull gitlab/gitlab-ce:latest
 	${MAKE} run
 
-run:
-	@docker rm -f gitlab || echo "container not started"
-	@echo "removed gitlab container"
+run: remove
 	@docker run --detach \
 		--hostname wizard23-DevRock2 \
 		--publish 0.0.0.0:443:443 --publish 0.0.0.0:80:80 --publish 0.0.0.0:2222:22 \
