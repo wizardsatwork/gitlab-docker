@@ -1,0 +1,29 @@
+server {
+  listen 80;
+  server_name localhost;
+  lua_code_cache on;
+
+  location /favicon.ico {
+    alias assets/favicon.ico;
+  }
+
+  location ~^/(img|css|js)/ {
+    root assets/;
+  }
+
+  location /user {
+    default_type text/html;
+
+    content_by_lua '
+      require("lapis").serve("user")
+    ';
+  }
+
+  location / {
+    default_type text/html;
+
+    content_by_lua '
+      require("lapis").serve("app")
+    ';
+  }
+}

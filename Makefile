@@ -1,49 +1,12 @@
 .PHONY: \
-	all \
-	stop \
-	update \
-	run
+	help \
+	all
 
-all: run
-
-install:
-	pip install docker-compose
-
-stop:
-	@docker stop gitlab
-
-remove:
-	@docker rm -f gitlab && echo "removed container" || echo "container does not exist"
-
-update: remove
-	@echo 'start update'
-	@docker pull gitlab/gitlab-ce:latest
-	${MAKE} run
-
-run: remove
-	@docker run --detach \
-		--hostname wizard23-DevRock2 \
-		--publish 0.0.0.0:443:443 --publish 0.0.0.0:80:80 --publish 0.0.0.0:2222:22 \
-		--name gitlab \
-		--restart always \
-		--volume /srv/gitlab/config:/etc/gitlab \
-		--volume /srv/gitlab/logs:/var/log/gitlab \
-		--volume /srv/gitlab/data:/var/opt/gitlab \
-		gitlab/gitlab-ce:latest
-	@echo "started docker container"
+all: help
 
 help:
 	@echo " \
 Usage: \n\
-  # run docker container, exposing port 80, 443 and 2222 for ssh \n\
-  make \n\
-\n\
-  # stop container \n\
-  make stop \n\
-\n\
-  make remove \n\
-\n\
-  # update container \n\
-  make update \n\
-\n\
+  each subdirectory contains a Makefile. \n\
+  One day this file will build the complete toolchain \n\
 "
