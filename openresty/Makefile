@@ -3,6 +3,11 @@ SRC_DIR = ./src
 NGINX_SRC_DIR = ${SRC_DIR}/nginx
 LUA_SRC_DIR = ${SRC_DIR}/lua
 LIB_NAME = resty
+CONTAINER_NAME = magic-${LIB_NAME}
+CONTAINER_PORT_80_IN = 8080
+CONTAINER_PORT_80_OUT = 80
+CONTAINER_PORT_443_IN = 4343
+CONTAINER_PORT_443_OUT = 443
 
 .PHONY: \
 	asset-build \
@@ -12,7 +17,8 @@ LIB_NAME = resty
 	docker-rm \
 	docker-rm-containers \
 	docker-rm-images \
-	docker-connect \
+	debug \
+	logs \
 	build \
 	moon-build \
 	moon-watch \
@@ -49,13 +55,15 @@ moon-lint:
 	@moonc -l ${LUA_SRC_DIR}/*
 
 docker-build:
-	@docker build -t="magic/${LIB_NAME}" .
+	@docker build -t="${CONTAINER_NAME}" .
 
-docker-run:
-	@docker run \
-		--name ${LIB_NAME} \
-		--rm \
-		magic/${LIB_NAME} \
+docker-run: docker-rm
+	docker run \
+		--detach \
+		-p ${CONTAINER_PORT_80_OUT}:${CONTAINER_PORT_80_IN} \
+		-p ${CONTAINER_PORT_443_OUT}:${CONTAINER_PORT_443_IN} \
+		--name ${CONTAINER_NAME} \
+		${CONTAINER_NAME} \
 		lapis server production
 
 run: docker-run
@@ -72,11 +80,14 @@ endif
 docker-rm-images:
 	@docker rmi $(shell docker images -q)
 
-docker-connect:
-	@docker run -it magic/${LIB_NAME} sh
+debug:
+	@docker run -it ${CONTAINER_NAME} sh
 
 docker-rm:
-	@docker rm -f resty
+	@docker rm -f ${CONTAINER_NAME} || echo 'docker-rm: container does not exist'
+
+logs:
+	@docker logs ${CONTAINER_NAME}
 
 # start lua lapis server in development mode
 server: build-source

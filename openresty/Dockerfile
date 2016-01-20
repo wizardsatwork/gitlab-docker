@@ -55,9 +55,18 @@ RUN \
   && make install \
   && rm -rf /build_tmp
 
+RUN \
+  adduser \
+  -h /home/lua \
+  -s /bin/sh \
+  -u 23231 \
+  -D wnwlua wnwlua
+
+#USER wnwlua
+
 RUN luarocks-5.1 install lapis
 
-ENV TARGET_DIR /home
+ENV TARGET_DIR /home/lua
 
 # add sources
 ADD ./out ${TARGET_DIR}/
@@ -70,3 +79,5 @@ RUN mkdir ${TARGET_DIR}/logs \
 EXPOSE 80 443
 
 WORKDIR ${TARGET_DIR}
+
+CMD ['/usr/bin/lapis server']

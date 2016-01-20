@@ -12,7 +12,7 @@ config "development", ->
     requests: true
 
 config "production", ->
-  port: 80
+  port: 8080
   num_workers: 4
   code_cache: "on"
   secret: "please-change-me"
