@@ -6,9 +6,6 @@
 
 all: run
 
-install:
-	pip install docker-compose
-
 stop:
 	@docker stop gitlab
 
@@ -22,28 +19,29 @@ update: remove
 
 run: remove
 	@docker run --detach \
-		--hostname wizard23-DevRock2 \
+		--hostname gitlab.wiznwit.com \
 		--publish 0.0.0.0:443:443 --publish 0.0.0.0:80:80 --publish 0.0.0.0:2222:22 \
 		--name gitlab \
 		--restart always \
-		--volume /srv/gitlab/config:/etc/gitlab \
-		--volume /srv/gitlab/logs:/var/log/gitlab \
-		--volume /srv/gitlab/data:/var/opt/gitlab \
+		--volume ./config:/etc/gitlab \
+		--volume ./lots:/var/log/gitlab \
+		--volume ./data:/var/opt/gitlab \
 		gitlab/gitlab-ce:latest
 	@echo "started docker container"
 
 help:
 	@echo " \
 Usage: \n\
-  # run docker container, exposing port 80, 443 and 2222 for ssh \n\
-  make \n\
+	# run docker container, exposing port 80, 443 and 2222 for ssh \n\
+	make \n\
 \n\
-  # stop container \n\
-  make stop \n\
+	# stop container \n\
+	make stop \n\
 \n\
-  make remove \n\
+	# remove container \n\
+	make remove \n\
 \n\
-  # update container \n\
-  make update \n\
+	# update container \n\
+	make update \n\
 \n\
 "
