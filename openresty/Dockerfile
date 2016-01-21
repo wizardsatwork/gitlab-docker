@@ -51,33 +51,31 @@ RUN \
     --with-http_realip_module \
     --with-http_ssl_module \
     --with-http_stub_status_module \
+    --with-luajit \
+    --with-http_addition_module \
+    --with-http_sub_module \
   && make \
   && make install \
   && rm -rf /build_tmp
 
-RUN \
-  adduser \
-  -h /home/lua \
-  -s /bin/sh \
-  -u 23231 \
-  -D wnwlua wnwlua
-
-#USER wnwlua
 
 RUN luarocks-5.1 install lapis
 
-ENV TARGET_DIR /home/lua
+ENV TARGET_DIR /home
+
+ENV LUA_PATH ?.lua;/usr/share/lua/5.1/?.lua;/usr/share/lua/5.1/?/init.lua;/usr/share/lua/5.1/init.lua;;
+ENV LUA_CPATH ?;?.so;/usr/lib/lua/5.1/?.so;/usr/lib/lua/5.1/?/init.so;/usr/lib/lua/5.1/init.so;;
 
 # add sources
-ADD ./out ${TARGET_DIR}/
+ADD ./out ${TARGET_DIR}
 
 # add log directory and pipe it to stdout
-RUN mkdir ${TARGET_DIR}/logs \
+RUN mkdir -p ${TARGET_DIR}/logs \
   && ln -sf /dev/stdout ${TARGET_DIR}/logs/access.log
 
 # Expose ports
 EXPOSE 80 443
 
-WORKDIR ${TARGET_DIR}
+WORKDIR /home
 
-CMD ['/usr/bin/lapis server']
+CMD ["lapis", "server", "production"]
