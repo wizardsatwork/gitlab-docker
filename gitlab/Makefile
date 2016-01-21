@@ -24,7 +24,7 @@ run: remove
 		--name gitlab \
 		--restart always \
 		--volume ./config:/etc/gitlab \
-		--volume ./lots:/var/log/gitlab \
+		--volume ./logs:/var/log/gitlab \
 		--volume ./data:/var/opt/gitlab \
 		gitlab/gitlab-ce:latest
 	@echo "started docker container"
