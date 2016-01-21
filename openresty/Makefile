@@ -29,7 +29,7 @@ CONTAINER_PORT_443_OUT = 443
 	all \
 	help
 
-all: build run
+all: build run logs
 
 asset-build:
 	@mkdir -p ${OUT_DIR}
@@ -63,8 +63,7 @@ docker-run: docker-rm
 		-p ${CONTAINER_PORT_80_OUT}:${CONTAINER_PORT_80_IN} \
 		-p ${CONTAINER_PORT_443_OUT}:${CONTAINER_PORT_443_IN} \
 		--name ${CONTAINER_NAME} \
-		${CONTAINER_NAME} \
-		lapis server production
+		${CONTAINER_NAME}
 
 run: docker-run
 
@@ -87,7 +86,7 @@ docker-rm:
 	@docker rm -f ${CONTAINER_NAME} || echo 'docker-rm: container does not exist'
 
 logs:
-	@docker logs ${CONTAINER_NAME}
+	@docker logs --follow ${CONTAINER_NAME}
 
 # start lua lapis server in development mode
 server: build-source
