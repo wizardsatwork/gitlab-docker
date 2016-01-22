@@ -9,7 +9,7 @@ RUN \
   adduser \
   -h /home/redis \
   -s /bin/sh \
-  -u 40561 \
+  -u 23230 \
   -D wnwredis wnwredis
 
 USER wnwredis
