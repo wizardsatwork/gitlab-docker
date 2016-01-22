@@ -1,8 +1,13 @@
 FROM alpine:3.3
 MAINTAINER  Wizards@Work <dev@wizardsat.work>
 
+ARG POSTGRES_CONTAINER_PORT
+ARG PGDATA
+
+ADD ./ENV /ENV
+
 RUN echo "@edge http://nl.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories \
-    && apk update\
+    && apk update \
     && apk add curl "postgresql@edge>9.4" \
     && mkdir /docker-entrypoint-initdb.d \
     && curl \
@@ -12,13 +17,12 @@ RUN echo "@edge http://nl.alpinelinux.org/alpine/edge/main" >> /etc/apk/reposito
     && apk del curl \
     && rm -rf /var/cache/apk/*
 
-ENV LANG en_US.utf8
-ENV PGDATA /srv/gitlab/data/postgresql/data
-VOLUME /srv/gitlab/data/postgresql/data
+VOLUME ${PGDATA}
 
 COPY docker-entrypoint.sh /
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
-EXPOSE 5432
+EXPOSE ${POSTGRES_CONTAINER_PORT}
+
 CMD ["postgres"]

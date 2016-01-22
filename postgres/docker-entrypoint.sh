@@ -1,4 +1,8 @@
 #!/bin/sh
+
+source /ENV
+rm /ENV
+
 chown -R postgres "$PGDATA"
 
 if [ -z "$(ls -A "$PGDATA")" ]; then
@@ -8,12 +12,12 @@ if [ -z "$(ls -A "$PGDATA")" ]; then
     : ${POSTGRES_USER:="postgres"}
     : ${POSTGRES_DB:=$POSTGRES_USER}
 
-    if [ "$POSTGRES_PASSWORD" ]; then
-      pass="PASSWORD '$POSTGRES_PASSWORD'"
+    if [ "$POSTGRES_PASS" ]; then
+      pass="PASSWORD '$POSTGRES_PASS'"
       authMethod=md5
     else
       echo "==============================="
-      echo "!!! Use \$POSTGRES_PASSWORD env var to secure your database !!!"
+      echo "!!! Use \$POSTGRES_PASS env var to secure your database !!!"
       echo "==============================="
       pass=
       authMethod=trust
