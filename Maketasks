@@ -1,8 +1,9 @@
 .PHONY: \
+	all \
 	env \
 	remove-hashes
 
-all: build run logs
+all: build run
 
 env:
 	@echo 'create env variables'
