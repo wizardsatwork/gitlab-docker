@@ -2,6 +2,7 @@ OUT_DIR = ./out
 SRC_DIR = ./src
 NGINX_SRC_DIR = ${SRC_DIR}/nginx
 LUA_SRC_DIR = ${SRC_DIR}/lua
+HOST_SRC_DIR = ${LUA_SRC_DIR}/hosts
 LIB_NAME = resty
 CONTAINER_NAME = magic-${LIB_NAME}
 CONTAINER_PORT_80_IN = 8080
@@ -36,8 +37,9 @@ asset-build:
 	@cp -r ${SRC_DIR}/assets/ ${OUT_DIR}
 
 nginx-build:
-	@mkdir -p ${OUT_DIR}/
+	@mkdir -p ${OUT_DIR}/sites-enabled
 	@cp -r ${NGINX_SRC_DIR}/* ${OUT_DIR}/
+	@cp -r ${HOST_SRC_DIR}/**/sites-enabled/* ${OUT_DIR}/sites-enabled/
 
 moon-build:
 	@mkdir -p ${OUT_DIR};

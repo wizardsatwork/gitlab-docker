@@ -1,6 +1,6 @@
 server {
   listen 8080;
-  server_name localhost;
+  server_name wiznwit.com wiznwit;
   lua_code_cache on;
 
   location /favicon.ico {
@@ -11,19 +11,11 @@ server {
     root assets/;
   }
 
-  location ^/user {
-    default_type text/html;
-
-    content_by_lua '
-      require("lapis").serve("services/user")
-    ';
-  }
-
   location / {
     default_type text/html;
 
     content_by_lua '
-      require("lapis").serve("hosts/wiznwitcom/app")
+      require("lapis").serve("app")
     ';
   }
 }

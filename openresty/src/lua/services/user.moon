@@ -1,6 +1,6 @@
 lapis = require "lapis"
 
-require "utils"
+require "../utils"
 
 import validate_functions, assert_valid from require "lapis.validate"
 
