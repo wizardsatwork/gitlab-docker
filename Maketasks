@@ -1,0 +1,9 @@
+.PHONY: \
+	env
+
+all: build run logs
+
+env:
+	@echo 'create env variables'
+	@./ENV
+	@echo "env variable ${PGDATA}"
