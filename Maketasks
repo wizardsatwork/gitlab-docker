@@ -1,9 +1,15 @@
 .PHONY: \
-	env
+	env \
+	remove-hashes
 
 all: build run logs
 
 env:
 	@echo 'create env variables'
 	@./ENV
-	@echo "env variable ${PGDATA}"
+	@echo "env variables set"
+
+remove-hashes:
+	@echo "remove hashes"
+	@rm ./pass.tmp
+	@echo "remove hashes done"
