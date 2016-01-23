@@ -17,55 +17,55 @@ include ./Maketasks
 all: help
 
 deploy:
-	${MAKE} postgres redis openresty
-	${MAKE} gitlab
-	${MAKE} remove-hashes
+	@${MAKE} postgres redis openresty
+	@${MAKE} gitlab
+	@${MAKE} remove-hashes
 
 build:
-	${MAKE} -j2 postgres-build redis-build
-	${MAKE} openresty-build
-	${MAKE} gitlab-build
+	@${MAKE} -j2 postgres-build redis-build
+	@${MAKE} openresty-build
+	@${MAKE} gitlab-build
 
 run:
-	${MAKE} -j2 postgres-run redis-run
-	${MAKE} openresty-run
-	${MAKE} gitlab-run
+	@${MAKE} -j2 postgres-run redis-run
+	@${MAKE} openresty-run
+	@${MAKE} gitlab-run
 
 postgres: postgres-build postgres-run
 
 postgres-build:
 	@cd ./postgres; \
-	${MAKE} build
+	@${MAKE} build
 
 postgres-run:
 	@cd ./postgres; \
-	${MAKE} run
+	@${MAKE} run
 
 redis: redis-build redis-run
 
 redis-build:
 	@cd redis; \
-	${MAKE} build
+	@${MAKE} build
 
 redis-run:
 	@cd redis; \
-	${MAKE} run
+	@${MAKE} run
 
 gitlab: gitlab-build gitlab-run
 
 gitlab-build:
 	@cd gitlab; \
-	${MAKE} build
+	@${MAKE} build
 
 gitlab-run:
 	@cd gitlab; \
-	${MAKE} run
+	@${MAKE} run
 
 openresty: openresty-build openresty-run
 
 openresty-build:
 	@cd openresty
-	${MAKE} build
+	@${MAKE} build
 
 openresty-run:
 	@cd openresty
