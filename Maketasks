@@ -5,10 +5,10 @@
 
 all: build run
 
-env:
-	@echo 'create env variables'
-	@./ENV
-	@echo "env variables set"
+#env:
+#	@echo "create env variables"
+#	@./ENV
+#	@echo "env variables set"
 
 remove-hashes:
 	@echo "remove hashes"
