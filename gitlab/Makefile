@@ -7,10 +7,10 @@
 all: run
 
 stop:
-	@docker stop gitlab
+	@docker stop $CONTAINER_NAME
 
 remove:
-	@docker rm -f gitlab && echo "removed container" || echo "container does not exist"
+	@docker rm -f $CONTAINER_NAME && echo "removed container" || echo "container does not exist"
 
 update: remove
 	@echo 'start update'

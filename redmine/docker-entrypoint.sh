@@ -5,16 +5,16 @@ source /ENV.sh
 
 case "$1" in
   rails|rake|passenger)
-    if [ "$POSTGRES_PORT" ]; then
+    if [ "$PG_PORT" ]; then
       adapter='postgresql'
       host='postgres'
-      port="${POSTGRES_PORT:-5432}"
-      username="${POSTGRES_USER:-postgres}"
-      password="${POSTGRES_PASS}"
-      database="${POSTGRES_DB:-$username}"
+      port="${PG_PORT:-5432}"
+      username="${PG_USER:-postgres}"
+      password="${PG_PASS}"
+      database="${PG_DB:-$username}"
       encoding=utf8
     else
-      echo >&2 'warning: missing POSTGRES_PORT environment variables'
+      echo >&2 'warning: missing PG_PORT environment variables'
       echo >&2 '  Did you forget to --link some_mysql_container:mysql or some-postgres:postgres?'
       echo >&2
       echo >&2 '*** Using sqlite3 as fallback. ***'
@@ -33,12 +33,7 @@ case "$1" in
     bundle install --without development test
 
     if [ ! -s config/secrets.yml ]; then
-      if [ "$REDMINE_SECRET_KEY_BASE" ]; then
-        cat > 'config/secrets.yml' <<-YML
-          $RAILS_ENV:
-            secret_key_base: "$REDMINE_SECRET_KEY_BASE"
-        YML
-      elif [ ! -f /usr/src/redmine/config/initializers/secret_token.rb ]; then
+      if [ ! -f /usr/src/redmine/config/initializers/secret_token.rb ]; then
         rake generate_secret_token
       fi
     fi

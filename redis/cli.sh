@@ -2,33 +2,33 @@
 
 source ./ENV.sh
 
-echo "container: ${REDIS_CONTAINER_NAME}"
+echo "container: ${CONTAINER_NAME}"
 
 function build() {
-  echo "docker building"
+  echo "docker building $CONTAINER_NAME"
 
   docker build \
-    -t ${REDIS_CONTAINER_NAME} \
-    --build-arg="DIR=${REDIS_DIR}" \
-    --build-arg="USER_ID=${REDIS_USER_ID}" \
-    --build-arg="USER_NAME=${REDIS_USER_NAME}" \
-    --build-arg="PORT=${REDIS_CONTAINER_PORT}" \
+    -t ${CONTAINER_NAME} \
+    --build-arg="DIR=${DIR}" \
+    --build-arg="USER_ID=${USER_ID}" \
+    --build-arg="USER_NAME=${USER_NAME}" \
+    --build-arg="PORT=${CONTAINER_PORT}" \
     --rm=true \
     . # dot!
 
-  echo "${REDIS_CONTAINER_NAME} build finished"
+  echo "${CONTAINER_NAME} build finished"
 }
 
 function debug() {
-  echo "starting docker interactive debug session"
+  echo "starting docker $CONTAINER_NAME container interactive debug session"
 
-  docker run -i -t ${REDIS_CONTAINER_NAME}
+  docker run -i -t ${CONTAINER_NAME}
 }
 
 function rm() {
-  echo "removing docker container"
+  echo "removing docker container $CONTAINER_NAME"
 
-  docker rm -f ${REDIS_CONTAINER_NAME} || echo 'container does not exist'
+  docker rm -f $CONTAINER_NAME || echo 'container does not exist'
 }
 
 function run() {
@@ -38,13 +38,13 @@ function run() {
 
   docker run \
     --detach \
-    --name ${REDIS_CONTAINER_NAME} \
-    -p ${REDIS_HOST_PORT}:${REDIS_CONTAINER_PORT} \
-    ${REDIS_CONTAINER_NAME}
+    --name ${CONTAINER_NAME} \
+    -p ${HOST_PORT}:${CONTAINER_PORT} \
+    ${CONTAINER_NAME}
 }
 
 function help() {
-  echo "tasks for ${REDIS_CONTAINER_NAME} container:"
+  echo "tasks for ${CONTAINER_NAME} container:"
   echo ""
   echo "build - build docker container"
   echo "debug - connect to container shell"

@@ -8,28 +8,28 @@ include ../Maketasks
 	env
 
 debug: env
-	@echo "connecting to container ${POSTGRES_CONTAINER_NAME}"
+	@echo "connecting to container ${PG_CONTAINER_NAME}"
 	@docker run \
 		-i \
-		--name ${POSTGRES_CONTAINER_NAME} \
-		--entrypoint=sh ${POSTGRES_CONTAINER_NAME}
+		--name ${PG_CONTAINER_NAME} \
+		--entrypoint=sh ${PG_CONTAINER_NAME}
 
 run: env rm
 	@echo "starting container"
 	@docker run \
 		-i \
 		--detach \
-		--name ${POSTGRES_CONTAINER_NAME} \
-		-p ${POSTGRES_HOST_PORT}:${POSTGRES_CONTAINER_PORT} \
-		${POSTGRES_CONTAINER_NAME}
+		--name ${PG_CONTAINER_NAME} \
+		-p ${PG_HOST_PORT}:${PG_CONTAINER_PORT} \
+		${PG_CONTAINER_NAME}
 
 rm: env
 	@echo "removing container"
-	@docker rm -f ${POSTGRES_CONTAINER_NAME} || echo "container does not exist"
+	@docker rm -f ${PG_CONTAINER_NAME} || echo "container does not exist"
 
 logs: env
 	@echo "connecting to logs"
-	@docker logs -f ${POSTGRES_CONTAINER_NAME}
+	@docker logs -f ${PG_CONTAINER_NAME}
 
 help:
 	@echo " \n\

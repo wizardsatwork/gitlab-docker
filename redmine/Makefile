@@ -15,7 +15,7 @@ rm:
 run: rm
 	docker run \
 	--detach \
-	--name some-redmine \
+	--name ${CONTAINER_NAME} \
 	--link magic-postgres:postgres \
 	redmine
 
