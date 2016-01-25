@@ -1,13 +1,20 @@
-# magic/resty dockerfile
-# VERSION   0.0.1
+# wizardsatwork/grundstein/resty dockerfile
+# VERSION 0.0.1
 
 FROM alpine:3.3
 
-MAINTAINER Wizards@Work <dev@wizardsat.work>
-ENV REFRESHED_AT 2015-27-12
+MAINTAINER Wizards & Witches <dev@wiznwit.com>
+ENV REFRESHED_AT 2016-24-01
 
-ENV OPENRESTY_VERSION 1.9.7.1
-ENV PATH /usr/local/openresty/nginx/sbin:$PATH
+ARG TARGET_DIR
+ARG VERSION
+ARG SBIN
+ARG PORT_80
+ARG PORT_443
+
+ENV PATH ${SBIN}:$PATH \
+    LUA_PATH ?.lua;/usr/share/lua/5.1/?.lua;/usr/share/lua/5.1/?/init.lua;/usr/share/lua/5.1/init.lua;; \
+    LUA_CPATH ?;?.so;/usr/lib/lua/5.1/?.so;/usr/lib/lua/5.1/?/init.so;/usr/lib/lua/5.1/init.so;;
 
 RUN echo "http://dl-4.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
 
@@ -40,9 +47,9 @@ RUN apk add --update --virtual build-deps \
 RUN \
   mkdir /build_tmp \
   && cd /build_tmp \
-  && wget http://openresty.org/download/ngx_openresty-${OPENRESTY_VERSION}.tar.gz \
-  && tar xf ngx_openresty-${OPENRESTY_VERSION}.tar.gz \
-  && cd ngx_openresty-${OPENRESTY_VERSION} \
+  && wget http://openresty.org/download/ngx_openresty-${VERSION}.tar.gz \
+  && tar xf ngx_openresty-${VERSION}.tar.gz \
+  && cd ngx_openresty-${VERSION} \
   && ./configure \
     --with-pcre-jit \
     --with-ipv6 \
@@ -58,13 +65,7 @@ RUN \
   && make install \
   && rm -rf /build_tmp
 
-
 RUN luarocks-5.1 install lapis
-
-ENV TARGET_DIR /home
-
-ENV LUA_PATH ?.lua;/usr/share/lua/5.1/?.lua;/usr/share/lua/5.1/?/init.lua;/usr/share/lua/5.1/init.lua;;
-ENV LUA_CPATH ?;?.so;/usr/lib/lua/5.1/?.so;/usr/lib/lua/5.1/?/init.so;/usr/lib/lua/5.1/init.so;;
 
 # add sources
 ADD ./out ${TARGET_DIR}
@@ -74,8 +75,8 @@ RUN mkdir -p ${TARGET_DIR}/logs \
   && ln -sf /dev/stdout ${TARGET_DIR}/logs/access.log
 
 # Expose ports
-EXPOSE 80 443
+EXPOSE ${PORT_80} ${PORT_443}
 
-WORKDIR /home
+WORKDIR ${TARGET_DIR}
 
 CMD ["lapis", "server", "production"]
