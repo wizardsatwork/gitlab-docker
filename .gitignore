@@ -2,3 +2,4 @@ out
 ENV.sh
 pass.tmp
 hosts/*
+redmine/config
