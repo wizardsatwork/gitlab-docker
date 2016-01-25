@@ -4,35 +4,32 @@ include ../Maketasks
 	build \
 	debug \
 	run \
-	help
-
-build: env
-	@echo "build postgres database ${POSTGRES_CONTAINER_NAME}"
-	@docker build \
-		-t ${POSTGRES_CONTAINER_NAME} \
-		--build-arg POSTGRES_CONTAINER_PORT=${POSTGRES_CONTAINER_PORT} \
-		--build-arg PGDATA=${PGDATA} \
-		--rm=true \
-		. # dot!
-	@echo 'build done'
+	help \
+	env
 
 debug: env
 	@echo "connecting to container ${POSTGRES_CONTAINER_NAME}"
 	@docker run \
 		-i \
-		-t \
+		--name ${POSTGRES_CONTAINER_NAME} \
 		--entrypoint=sh ${POSTGRES_CONTAINER_NAME}
 
-run: env
-	@echo 'starting container'
+run: env rm
+	@echo "starting container"
 	@docker run \
 		-i \
+		--detach \
+		--name ${POSTGRES_CONTAINER_NAME} \
 		-p ${POSTGRES_HOST_PORT}:${POSTGRES_CONTAINER_PORT} \
 		${POSTGRES_CONTAINER_NAME}
 
+rm: env
+	@echo "removing container"
+	@docker rm -f ${POSTGRES_CONTAINER_NAME} || echo "container does not exist"
+
 logs: env
-	@echo 'connecting to logs'
-	@docker logs -i -P ${POSTGRES_CONTAINER_NAME}
+	@echo "connecting to logs"
+	@docker logs -f ${POSTGRES_CONTAINER_NAME}
 
 help:
 	@echo " \n\

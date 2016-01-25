@@ -12,7 +12,7 @@ You can start a basic PostgreSQL server, protected by a password,
 listening on port 5432 by running the following:
 
 ```
-$ docker run --name some-postgres -e POSTGRES_PASSWORD=mysecretpassword -d alpine-postgres
+$ docker run --name some-postgres -e PG_PASSWORD=mysecretpassword -d alpine-postgres
 ```
 
 Then start your app's container while **linking** it to the PostgreSQL

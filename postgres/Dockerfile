@@ -1,10 +1,11 @@
+# wizardsatwork/grundstein/postgres dockerfile
+# VERSION 0.0.1
+
 FROM alpine:3.3
-MAINTAINER  Wizards@Work <dev@wizardsat.work>
 
-ARG POSTGRES_CONTAINER_PORT
-ARG PGDATA
+MAINTAINER Wizards & Witches <dev@wiznwit.com>
+ENV REFRESHED_AT 2016-24-01
 
-ADD ./ENV /ENV
 
 RUN echo "@edge http://nl.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories \
     && apk update \
@@ -17,12 +18,17 @@ RUN echo "@edge http://nl.alpinelinux.org/alpine/edge/main" >> /etc/apk/reposito
     && apk del curl \
     && rm -rf /var/cache/apk/*
 
+ARG PORT
+ARG PGDATA
+
+ADD ./ENV.sh /ENV
+
 VOLUME ${PGDATA}
 
 COPY docker-entrypoint.sh /
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
-EXPOSE ${POSTGRES_CONTAINER_PORT}
+EXPOSE ${PORT}
 
 CMD ["postgres"]
