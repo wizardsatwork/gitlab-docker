@@ -1,4 +1,4 @@
 out
-ENV
+ENV.sh
 pass.tmp
 hosts/*
