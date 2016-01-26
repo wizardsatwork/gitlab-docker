@@ -5,6 +5,7 @@ HOSTS_DIR = hosts
 .PHONY: \
 	help \
 	all \
+	ps \
 	postgres \
 	postgres-build \
 	postgres-run \
@@ -140,6 +141,9 @@ clean:
 	@echo "removing configuration files:"
 	@echo "$$(ls -l ./**/ENV.sh)"
 	@rm -f ./**/ENV.sh
+
+ps:
+	@docker ps
 
 help:
 	@echo "\
