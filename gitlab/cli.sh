@@ -35,7 +35,7 @@ function run() {
     --volume config:/etc/gitlab \
     --volume logs:/var/log/gitlab \
     --volume data:/var/opt/gitlab \
-    ${CONTAINER_NAME}/gitlab-ce:latest
+    gitlab/gitlab-ce:latest
 
   echo "started docker container"
 }
