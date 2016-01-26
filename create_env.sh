@@ -14,6 +14,7 @@ OPENRESTY_FILE=${GENERATED_CWD}/openresty/ENV.sh
 GITLAB_FILE=${GENERATED_CWD}/gitlab/ENV.sh
 REDMINE_FILE=${GENERATED_CWD}/redmine/ENV.sh
 REDMINE_CONFIG_DIR=${GENERATED_CWD}/redmine/config
+REDMINE_DB_CONFIG_FILE=${REDMINE_CONFIG_DIR}/database.yml
 REDMINE_SECRET_CONFIG_FILE=${REDMINE_CONFIG_DIR}/secret.yml
 REDMINE_RAILS_ENV=production
 
@@ -140,6 +141,18 @@ export PG_PORT=${POSTGRES_PORT}
 echo "wrote $REDMINE_FILE"
 
 mkdir -p ${REDMINE_CONFIG_DIR}
+
+echo "\
+${REDMINE_RAILS_ENV}:
+  adapter=\"postgresql\"
+  host=\"postgres\"
+  port=\"${POSTGRES_PORT}\"
+  username=\"${POSTGRES_USER_NAME}\"
+  password=\"${GENERATED_POSTGRES_PASS}\"
+  database=\"${POSTGRES_DATABASE}\"
+  encoding=\"utf8\"
+" > ${REDMINE_DB_CONFIG_FILE}
+echo "wrote $REDMINE_DB_CONFIG_FILE"
 
 echo "\
 $REDMINE_RAILS_ENV:
