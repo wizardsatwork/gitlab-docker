@@ -42,7 +42,6 @@ deploy:
 build:
 	@${MAKE} -j2 postgres-build redis-build
 	@${MAKE} openresty-build
-	@${MAKE} gitlab-build
 
 run:
 	@${MAKE} postgres-run
@@ -66,10 +65,7 @@ redis-build:
 redis-run:
 	@cd redis; ./cli.sh run
 
-gitlab: gitlab-build gitlab-run
-
-gitlab-build:
-	@cd gitlab; ./cli.sh build
+gitlab: gitlab-run
 
 gitlab-run:
 	@cd gitlab; ./cli.sh run
@@ -93,6 +89,13 @@ redmine-run:
 
 redmine-logs:
 	@cd redmine; ./cli.sh logs
+
+stop-all:
+	@cd gitlab; ./cli.sh stop
+	@cd redmine; ./cli.sh stop
+	@cd openresty; ./cli.sh stop
+	@cd redis; ./cli.sh stop
+	@cd postgres; ./cli.sh stop
 
 hosts:
 	@echo "building hosts"
