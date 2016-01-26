@@ -24,7 +24,6 @@ function build() {
     --build-arg="WORKDIR=${WORKDIR}" \
     --build-arg="VERSION=${VERSION}" \
     --build-arg="MD5=${MD5}" \
-    --build-arg="RAILS_ENV=${RAILS_ENV}" \
     --build-arg="PORT=${CONTAINER_PORT}" \
     . # dot!
 
