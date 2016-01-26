@@ -8,11 +8,6 @@ ENV REFRESHED_AT 2016-24-01
 
 ARG USER
 ARG GROUP
-ARG PORT
-ARG WORKDIR
-ARG VERSION
-ARG MD5
-ARG RAILS_ENV
 
 # add our user and group first to make sure their IDs get assigned consistently,
 # regardless of whatever dependencies get added
@@ -38,10 +33,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libsqlite3-0 \
   && rm -rf /var/lib/apt/lists/*
 
+ARG WORKDIR
 WORKDIR ${WORKDIR}
 
+ARG VERSION
 RUN echo "redmine version ${VERSION}"
 
+ARG MD5
 RUN curl -fSL "http://www.redmine.org/releases/redmine-${VERSION}.tar.gz" -o redmine.tar.gz \
   && echo "${MD5} redmine.tar.gz" | md5sum -c - \
   && tar -xvf redmine.tar.gz --strip-components=1 \
@@ -63,7 +61,7 @@ RUN buildDeps='\
   && apt-get update && apt-get install -y $buildDeps --no-install-recommends \
   && rm -rf /var/lib/apt/lists/*
 
-RUN bundle install --without development test; \
+RUN bundle install --without development test \
   && rm ./config/database.yml \
   && apt-get purge -y --auto-remove $buildDeps
 
@@ -76,5 +74,6 @@ COPY ./ENV.sh /ENV.sh
 COPY docker-entrypoint.sh /
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
+ARG PORT
 EXPOSE ${PORT}
 CMD ["rails", "server", "-b", "0.0.0.0"]
