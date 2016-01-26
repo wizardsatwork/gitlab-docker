@@ -80,10 +80,7 @@ openresty-run:
 	@cd openresty; ./cli.sh run
 
 
-redmine: redmine-build redmine-run
-
-redmine-build:
-	@cd redmine; ./cli.sh build
+redmine: redmine-run
 
 redmine-run:
 	@cd redmine; ./cli.sh run
