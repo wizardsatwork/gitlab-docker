@@ -2,13 +2,20 @@
 
 source ./ENV.sh
 
-echo "container: ${POSTGRES_CONTAINER_NAME}"
+echo "container: ${CONTAINER_NAME}"
+
+function stop() {
+  echo "stopping ${CONTAINER_NAME}"
+  docker stop ${CONTAINER_NAME} \
+  && echo "stopped ${CONTAINER_NAME}" \
+  || echo "container ${CONTAINER_NAME} not started"
+}
 
 function build {
-  echo "build postgres database ${POSTGRES_CONTAINER_NAME}"
+  echo "build postgres database ${CONTAINER_NAME}"
   docker build \
-  -t=${POSTGRES_CONTAINER_NAME} \
-  --build-arg="PORT=${POSTGRES_CONTAINER_PORT}" \
+  -t=${CONTAINER_NAME} \
+  --build-arg="PORT=${CONTAINER_PORT}" \
   --build-arg="PGDATA=${PGDATA}" \
   --rm=true \
   . # dot!
@@ -16,16 +23,16 @@ function build {
 }
 
 function debug() {
-  echo "connecting to container ${POSTGRES_CONTAINER_NAME}"
+  echo "connecting to container ${CONTAINER_NAME}"
   docker run \
     -i \
-    --name ${POSTGRES_CONTAINER_NAME} \
-    --entrypoint=sh ${POSTGRES_CONTAINER_NAME}
+    --name ${CONTAINER_NAME} \
+    --entrypoint=sh ${CONTAINER_NAME}
 }
 
 function rm() {
   echo "removing container"
-  docker rm -f ${POSTGRES_CONTAINER_NAME} || echo "container does not exist"
+  docker rm -f ${CONTAINER_NAME} || echo "container does not exist"
 }
 
 function run() {
@@ -34,14 +41,19 @@ function run() {
   docker run \
     -i \
     --detach \
-    --name ${POSTGRES_CONTAINER_NAME} \
-    -p ${POSTGRES_HOST_PORT}:${POSTGRES_CONTAINER_PORT} \
-    ${POSTGRES_CONTAINER_NAME}
+    --name ${CONTAINER_NAME} \
+    -p ${HOST_PORT}:${CONTAINER_PORT} \
+    ${CONTAINER_NAME}
 }
 
 function logs() {
   echo "connecting to logs"
-  docker logs -f ${POSTGRES_CONTAINER_NAME}
+  docker logs -f ${CONTAINER_NAME}
+}
+
+function stop() {
+  echo "stopping $CONTAINER_NAME"
+  docker stop $CONTAINER_NAME || echo "container does not exist"
 }
 
 function help() {

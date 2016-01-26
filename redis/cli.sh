@@ -4,6 +4,13 @@ source ./ENV.sh
 
 echo "container: ${CONTAINER_NAME}"
 
+function stop() {
+  echo "stopping ${CONTAINER_NAME}"
+  docker stop ${CONTAINER_NAME} \
+  && echo "stopped ${CONTAINER_NAME}" \
+  || echo "container ${CONTAINER_NAME} not started"
+}
+
 function build() {
   echo "docker building $CONTAINER_NAME"
 

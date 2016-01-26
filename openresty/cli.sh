@@ -2,33 +2,40 @@
 
 source ./ENV.sh
 
-echo "container: ${OPENRESTY_CONTAINER_NAME}"
+echo "container: ${CONTAINER_NAME}"
+
+function stop() {
+  echo "stopping ${CONTAINER_NAME}"
+  docker stop ${CONTAINER_NAME} \
+  && echo "stopped ${CONTAINER_NAME}" \
+  || echo "container ${CONTAINER_NAME} not started"
+}
 
 function build {
-  echo "build openresty ${OPENRESTY_CONTAINER_NAME}"
+  echo "build openresty ${CONTAINER_NAME}"
   docker build \
-    -t=${OPENRESTY_CONTAINER_NAME} \
-    --build-arg="TARGET_DIR=${OPENRESTY_TARGET_DIR}" \
-    --build-arg="PORT_80=${OPENRESTY_CONTAINER_PORT_80}" \
-    --build-arg="PORT_443=${OPENRESTY_CONTAINER_PORT_443}" \
-    --build-arg="VERSION=${OPENRESTY_VERSION}" \
-    --build-arg="SBIN=${OPENRESTY_SBIN}" \
+    -t=${CONTAINER_NAME} \
+    --build-arg="TARGET_DIR=${TARGET_DIR}" \
+    --build-arg="PORT_80=${CONTAINER_PORT_80}" \
+    --build-arg="PORT_443=${CONTAINER_PORT_443}" \
+    --build-arg="VERSION=${VERSION}" \
+    --build-arg="SBIN=${SBIN}" \
     --rm=true \
     . # dot!
   echo "build done"
 }
 
 function debug() {
-  echo "connecting to container ${OPENRESTY_CONTAINER_NAME}"
+  echo "connecting to container ${CONTAINER_NAME}"
   docker run \
     -i \
-    --name ${OPENRESTY_CONTAINER_NAME} \
-    --entrypoint=sh ${OPENRESTY_CONTAINER_NAME}
+    --name ${CONTAINER_NAME} \
+    --entrypoint=sh ${CONTAINER_NAME}
 }
 
 function rm() {
   echo "removing container"
-  docker rm -f ${OPENRESTY_CONTAINER_NAME} || echo "container does not exist"
+  docker rm -f ${CONTAINER_NAME} || echo "container does not exist"
 }
 
 function run() {
@@ -37,14 +44,14 @@ function run() {
   docker run \
     -i \
     --detach \
-    --name ${OPENRESTY_CONTAINER_NAME} \
-    -p ${OPENRESTY_HOST_PORT}:${OPENRESTY_CONTAINER_PORT} \
-    ${OPENRESTY_CONTAINER_NAME}
+    --name ${CONTAINER_NAME} \
+    -p ${HOST_PORT}:${CONTAINER_PORT} \
+    ${CONTAINER_NAME}
 }
 
 function logs() {
   echo "connecting to logs"
-  docker logs -f ${OPENRESTY_CONTAINER_NAME}
+  docker logs -f ${CONTAINER_NAME}
 }
 
 function help() {

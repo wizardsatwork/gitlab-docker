@@ -3,27 +3,29 @@
 source ./ENV.sh
 
 function stop() {
-  echo "stopping ${REDMINE_CONTAINER_NAME}"
-  docker stop ${REDMINE_CONTAINER_NAME}
+  echo "stopping ${CONTAINER_NAME}"
+  docker stop ${CONTAINER_NAME} \
+  && echo "stopped ${CONTAINER_NAME}" \
+  || echo "container ${CONTAINER_NAME} not started"
 }
 
 function rm() {
-  echo "delete ${REDMINE_CONTAINER_NAME}"
-  docker rm -f ${REDMINE_CONTAINER_NAME} && echo "removed container" || echo "container does not exist"
+  echo "delete ${CONTAINER_NAME}"
+  docker rm -f ${CONTAINER_NAME} && echo "removed container" || echo "container does not exist"
 }
 
 function build() {
-  echo "building: ${REDMINE_CONTAINER_NAME}"
+  echo "building: ${CONTAINER_NAME}"
 
   docker build \
-    -t ${REDMINE_CONTAINER_NAME} \
-    --build-arg="USER=${REDMINE_USER}" \
-    --build-arg="GROUP=${REDMINE_GROUP}" \
-    --build-arg="WORKDIR=${REDMINE_WORKDIR}" \
-    --build-arg="VERSION=${REDMINE_VERSION}" \
-    --build-arg="MD5=${REDMINE_MD5}" \
-    --build-arg="RAILS_ENV=${REDMINE_RAILS_ENV}" \
-    --build-arg="PORT=${REDMINE_CONTAINER_PORT}" \
+    -t ${CONTAINER_NAME} \
+    --build-arg="USER=${USER}" \
+    --build-arg="GROUP=${GROUP}" \
+    --build-arg="WORKDIR=${WORKDIR}" \
+    --build-arg="VERSION=${VERSION}" \
+    --build-arg="MD5=${MD5}" \
+    --build-arg="RAILS_ENV=${RAILS_ENV}" \
+    --build-arg="PORT=${CONTAINER_PORT}" \
     . # dot!
 
   echo "build finished"
@@ -32,22 +34,22 @@ function build() {
 function run() {
   rm
 
-  echo "run ${REDMINE_CONTAINER_NAME}"
+  echo "run ${CONTAINER_NAME}"
 
   docker run \
-    --name ${REDMINE_CONTAINER_NAME} \
+    --name ${CONTAINER_NAME} \
     --detach \
     --link=magic-postgres:postgresql \
     --publish=10083:80 \
     --volume=data:/home/redmine/data \
-    ${REDMINE_CONTAINER_NAME}
+    ${CONTAINER_NAME}
 
   echo "started docker container"
 }
 
 function logs() {
   echo "connecting to docker logs"
-  docker logs ${REDMINE_CONTAINER_NAME}
+  docker logs ${CONTAINER_NAME}
 }
 
 function help() {
