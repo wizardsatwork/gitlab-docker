@@ -50,13 +50,16 @@ run:
 	@${MAKE} openresty-run
 	@${MAKE} gitlab-run
 
-postgres: postgres-build postgres-run
+postgres: postgres-build postgres-run postgres-logs
 
 postgres-build:
 	@cd postgres; ./cli.sh build
 
 postgres-run:
 	@cd postgres; ./cli.sh run
+
+postgres-logs:
+	@cd postgres; ./cli.sh logs
 
 redis: redis-build redis-run
 
@@ -65,6 +68,9 @@ redis-build:
 
 redis-run:
 	@cd redis; ./cli.sh run
+
+redis-logs:
+	@cd redis; ./cli.sh logs
 
 gitlab: gitlab-run
 
@@ -79,11 +85,13 @@ openresty-build:
 openresty-run:
 	@cd openresty; ./cli.sh run
 
-
-redmine: redmine-run
+redmine: redmine-build redmine-run redmine-logs
 
 redmine-run:
 	@cd redmine; ./cli.sh run
+
+redmine-build:
+	@cd redmine; ./cli.sh build
 
 redmine-logs:
 	@cd redmine; ./cli.sh logs
