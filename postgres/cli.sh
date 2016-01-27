@@ -42,6 +42,8 @@ function run() {
     -i \
     --detach \
     --name ${CONTAINER_NAME} \
+    --env POSTGRES_PASSWORD=${PASS} \
+    --env POSTGRES_USER=${USER} \
     -p ${HOST_PORT}:${CONTAINER_PORT} \
     ${CONTAINER_NAME}
 }

@@ -14,41 +14,41 @@ function rm() {
   docker rm -f ${CONTAINER_NAME} && echo "removed container" || echo "container does not exist"
 }
 
-function build() {
-  echo "building: ${CONTAINER_NAME}"
+#function build() {
+  #echo "building: ${CONTAINER_NAME}"
 
-  docker build \
-    -t ${CONTAINER_NAME} \
-    --build-arg="USER=${USER}" \
-    --build-arg="GROUP=${GROUP}" \
-    --build-arg="WORKDIR=${WORKDIR}" \
-    --build-arg="VERSION=${VERSION}" \
-    --build-arg="MD5=${MD5}" \
-    --build-arg="PORT=${CONTAINER_PORT}" \
-    . # dot!
+  #docker build \
+    #-t ${CONTAINER_NAME} \
+    #--build-arg="USER=${USER}" \
+    #--build-arg="GROUP=${GROUP}" \
+    #--build-arg="WORKDIR=${WORKDIR}" \
+    #--build-arg="VERSION=${VERSION}" \
+    #--build-arg="MD5=${MD5}" \
+    #--build-arg="PORT=${CONTAINER_PORT}" \
+    #. # dot!
 
-  echo "build finished"
-}
+  #echo "build finished"
+#}
 
 function run() {
   rm
 
   echo "run ${CONTAINER_NAME}"
 
-  docker run \
+  docker run --detach \
+    --hostname redmine.wiznwit.com \
+    -p 3000:3000 \
     --name ${CONTAINER_NAME} \
-    --detach \
-    --link=magic-postgres:postgresql \
-    --publish=10083:80 \
-    --volume=data:/home/redmine/data \
-    ${CONTAINER_NAME}
+    --volume ${PWD}/data:/usr/src/redmine/files \
+    --link ${POSTGRES_CONTAINER_NAME}:postgres \
+    redmine
 
   echo "started docker container"
 }
 
 function logs() {
   echo "connecting to docker logs"
-  docker logs ${CONTAINER_NAME}
+  docker logs --follow ${CONTAINER_NAME}
 }
 
 function help() {
