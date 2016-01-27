@@ -21,6 +21,10 @@ function update() {
   echo "update finished"
 }
 
+function logs() {
+  docker logs --follow $CONTAINER_NAME
+}
+
 function run() {
   rm
 
