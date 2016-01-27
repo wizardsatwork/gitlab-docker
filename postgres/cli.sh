@@ -37,13 +37,14 @@ function rm() {
 
 function run() {
   rm
-  echo "starting container"
+  echo "starting container ${CONTAINER_NAME}"
   docker run \
     -i \
     --detach \
     --name ${CONTAINER_NAME} \
     --env POSTGRES_PASSWORD=${PASS} \
     --env POSTGRES_USER=${USER} \
+    --volume ${PWD}/data:/home/data/postgresql \
     -p ${HOST_PORT}:${CONTAINER_PORT} \
     ${CONTAINER_NAME}
 }
