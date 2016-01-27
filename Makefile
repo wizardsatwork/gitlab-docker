@@ -85,13 +85,13 @@ openresty-build:
 openresty-run:
 	@cd openresty; ./cli.sh run
 
-redmine: redmine-build redmine-run redmine-logs
+openresty-logs:
+	cd openresty; ./cli.sh logs
+
+redmine: redmine-run redmine-logs
 
 redmine-run:
 	@cd redmine; ./cli.sh run
-
-redmine-build:
-	@cd redmine; ./cli.sh build
 
 redmine-logs:
 	@cd redmine; ./cli.sh logs
