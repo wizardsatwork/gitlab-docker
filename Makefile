@@ -1,34 +1,49 @@
-include ./Maketasks
-
 HOSTS_DIR = hosts
 
 .PHONY: \
 	help \
 	all \
+	env \
+	deploy \
+	build \
+	run \
+	stop \
 	ps \
 	postgres \
 	postgres-build \
 	postgres-run \
 	postgres-logs \
+	postgres-rm \
+	postgres-debug \
 	redis \
 	redis-build \
 	redis-run \
 	redis-logs \
+	redis-rm \
+	redis-debug \
 	openresty \
 	openresty-build \
 	openresty-run \
 	openresty-logs \
+	openresty-rm \
+	openresty-debug \
 	gitlab \
 	gitlab-build \
 	gitlab-run \
 	gitlab-logs \
+	gitlab-rm \
+	gitlab-debug \
 	redmine \
 	redmine-build \
 	redmine-run \
 	redmine-logs \
+	redmine-rm \
+	redmine-debug \
 	hosts \
 	hosts-build \
 	hosts-run
+
+# general
 
 all: help
 
@@ -43,12 +58,33 @@ deploy:
 build:
 	@${MAKE} -j2 postgres-build redis-build
 	@${MAKE} openresty-build
+	@${MAKE} gitlab-build
+	@${MAKE} redmine-build
 
 run:
 	@${MAKE} postgres-run
 	@${MAKE} redis-run
 	@${MAKE} openresty-run
 	@${MAKE} gitlab-run
+	@${MAKE} redmine-run
+
+clean:
+	@echo "removing configuration files:"
+	@echo "$$(ls -l ./**/ENV.sh)"
+	@rm -f ./**/ENV.sh
+
+ps:
+	@docker ps
+
+stop:
+	@${MAKE} -j5 \
+		postgres-stop \
+		redis-stop \
+		openresty-stop \
+		gitlab-stop \
+		redmine-stop
+
+# POSTGRES tasks
 
 postgres: postgres-build postgres-run postgres-logs
 
@@ -61,6 +97,18 @@ postgres-run:
 postgres-logs:
 	@cd postgres; ./cli.sh logs
 
+postgres-debug:
+	@cd postgres; ./cli.sh debug
+
+postgres-rm:
+	@cd postgres; ./cli.sh rm
+
+postgres-stop:
+	@cd postgres; ./cli.sh stop
+
+
+# REDIS tasks
+
 redis: redis-build redis-run
 
 redis-build:
@@ -72,10 +120,36 @@ redis-run:
 redis-logs:
 	@cd redis; ./cli.sh logs
 
+redis-debug:
+	@cd redis; ./cli.sh debug
+
+redis-rm:
+	@cd redis; ./cli.sh rm
+
+redis-stop:
+	@cd redis; ./cli.sh stop
+
+
+# GITLAB tasks
+
 gitlab: gitlab-run
 
 gitlab-run:
 	@cd gitlab; ./cli.sh run
+
+gitlab-build:
+	@cd gitlab; ./cli.sh build
+
+gitlab-debug:
+	@cd gitlab; ./cli.sh debug
+
+gitlab-rm:
+	@cd gitlab; ./cli.sh rm
+
+gitlab-stop:
+	@cd gitlab; ./cli.sh stop
+
+# OPENRESTY tasks
 
 openresty: openresty-build openresty-run openresty-logs
 
@@ -88,6 +162,18 @@ openresty-run:
 openresty-logs:
 	cd openresty; ./cli.sh logs
 
+openresty-debug:
+	@cd openresty; ./cli.sh debug
+
+openresty-rm:
+	@cd openresty; ./cli.sh rm
+
+openresty-stop:
+	@cd openresty; ./cli.sh stop
+
+
+# REDMINE tasks
+
 redmine: redmine-run redmine-logs
 
 redmine-run:
@@ -96,12 +182,19 @@ redmine-run:
 redmine-logs:
 	@cd redmine; ./cli.sh logs
 
-stop-all:
-	@cd gitlab; ./cli.sh stop
+redmine-build:
+	@cd redmine; ./cli.sh build
+
+redmine-debug:
+	@cd redmine; ./cli.sh debug
+
+redmine-rm:
+	@cd redmine; ./cli.sh rm
+
+redmine-stop:
 	@cd redmine; ./cli.sh stop
-	@cd openresty; ./cli.sh stop
-	@cd redis; ./cli.sh stop
-	@cd postgres; ./cli.sh stop
+
+# host tasks
 
 hosts:
 	@echo "building hosts"
@@ -142,13 +235,8 @@ hosts-install:
 		echo "host: $$dir dependencies installed"; \
 	done;
 
-clean:
-	@echo "removing configuration files:"
-	@echo "$$(ls -l ./**/ENV.sh)"
-	@rm -f ./**/ENV.sh
 
-ps:
-	@docker ps
+# help output
 
 help:
 	@echo "\
