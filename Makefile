@@ -143,6 +143,9 @@ gitlab-build:
 gitlab-debug:
 	@cd gitlab; ./cli.sh debug
 
+gitlab-logs:
+	@cd gitlab; ./cli.sh logs
+
 gitlab-rm:
 	@cd gitlab; ./cli.sh rm
 
