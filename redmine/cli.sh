@@ -1,18 +1,10 @@
 #!/bin/bash
 
 source ./ENV.sh
+source ../tasks.sh
 
-function stop() {
-  echo "stopping ${CONTAINER_NAME}"
-  docker stop ${CONTAINER_NAME} \
-  && echo "stopped ${CONTAINER_NAME}" \
-  || echo "container ${CONTAINER_NAME} not started"
-}
+echo "container: ${CONTAINER_NAME}"
 
-function rm() {
-  echo "delete ${CONTAINER_NAME}"
-  docker rm -f ${CONTAINER_NAME} && echo "removed container" || echo "container does not exist"
-}
 
 function build() {
   echo "building: ${CONTAINER_NAME}"
@@ -36,11 +28,6 @@ function run() {
     redmine
 
   echo "started docker container"
-}
-
-function logs() {
-  echo "connecting to docker logs"
-  docker logs --follow ${CONTAINER_NAME}
 }
 
 function help() {

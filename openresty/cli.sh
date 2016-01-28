@@ -1,16 +1,8 @@
 #!/bin/bash
 
 source ./ENV.sh
-
+source ../tasks.sh
 echo "container: ${CONTAINER_NAME}"
-
-function stop() {
-  echo "stopping ${CONTAINER_NAME}"
-
-  docker stop ${CONTAINER_NAME} \
-  && echo "stopped ${CONTAINER_NAME}" \
-  || echo "container ${CONTAINER_NAME} not started"
-}
 
 function build {
   echo "build openresty ${CONTAINER_NAME}"
@@ -28,22 +20,6 @@ function build {
   echo "build done"
 }
 
-function debug() {
-  echo "connecting to container ${CONTAINER_NAME}"
-  docker run \
-    -i \
-    --name ${CONTAINER_NAME} \
-    --entrypoint=sh ${CONTAINER_NAME}
-}
-
-function rm() {
-  echo "removing container"
-
-  docker rm -f ${CONTAINER_NAME} \
-  && echo "container removed" \
-  || echo "container does not exist"
-}
-
 function run() {
   rm
   echo "starting container"
@@ -53,11 +29,6 @@ function run() {
     --name ${CONTAINER_NAME} \
     -p ${HOST_PORT}:${CONTAINER_PORT} \
     ${CONTAINER_NAME}
-}
-
-function logs() {
-  echo "connecting to logs"
-  docker logs -f ${CONTAINER_NAME}
 }
 
 function help() {

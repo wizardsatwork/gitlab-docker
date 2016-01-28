@@ -1,15 +1,9 @@
 #!/bin/bash
 
 source ./ENV.sh
+source ../tasks.sh
 
 echo "container: ${CONTAINER_NAME}"
-
-function stop() {
-  echo "stopping ${CONTAINER_NAME}"
-  docker stop ${CONTAINER_NAME} \
-  && echo "stopped ${CONTAINER_NAME}" \
-  || echo "container ${CONTAINER_NAME} not started"
-}
 
 function build {
   echo "build postgres database ${CONTAINER_NAME}"
@@ -20,19 +14,6 @@ function build {
   --rm=true \
   . # dot!
   echo "build done"
-}
-
-function debug() {
-  echo "connecting to container ${CONTAINER_NAME}"
-  docker run \
-    -i \
-    --name ${CONTAINER_NAME} \
-    --entrypoint=sh ${CONTAINER_NAME}
-}
-
-function rm() {
-  echo "removing container"
-  docker rm -f ${CONTAINER_NAME} || echo "container does not exist"
 }
 
 function run() {
@@ -47,16 +28,6 @@ function run() {
     --volume ${PWD}/data:/home/data/postgresql \
     -p ${HOST_PORT}:${CONTAINER_PORT} \
     ${CONTAINER_NAME}
-}
-
-function logs() {
-  echo "connecting to logs"
-  docker logs -f ${CONTAINER_NAME}
-}
-
-function stop() {
-  echo "stopping $CONTAINER_NAME"
-  docker stop $CONTAINER_NAME || echo "container does not exist"
 }
 
 function help() {

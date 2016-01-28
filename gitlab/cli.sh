@@ -1,28 +1,14 @@
 #!/bin/bash
 
 source ./ENV.sh
+source ../tasks.sh
 
-function stop() {
-  echo "stopping ${CONTAINER_NAME}"
-  docker stop ${CONTAINER_NAME} \
-  && echo "stopped ${CONTAINER_NAME}" \
-  || echo "container ${CONTAINER_NAME} not started"
-}
+function build() {
+  echo "building: ${CONTAINER_NAME}"
 
-function rm() {
-  echo "removing container ${CONTAINER_NAME}"
-  docker rm -f ${CONTAINER_NAME} && echo "removed container" || echo "container does not exist"
-  echo "container removed"
-}
+  docker pull gitlab/gitlab-ce:latest
 
-function update() {
-  echo "start update of ${CONTAINER_NAME}"
-  docker pull ${CONTAINER_NAME}/gitlab-ce:latest
-  echo "update finished"
-}
-
-function logs() {
-  docker logs --follow $CONTAINER_NAME
+  echo "build finished"
 }
 
 function run() {
@@ -42,6 +28,22 @@ function run() {
     gitlab/gitlab-ce:latest
 
   echo "started docker container"
+}
+
+function run-test() {
+  docker run \
+    --hostname ${HOSTNAME} \
+    --name gitlab \
+    --detach \
+    --link magic-postgres:postgresql \
+    --link magic-redis:redisio \
+    --publish $HOST_PORT_22:$CONTAINER_PORT_22 \
+    --publish $HOST_PORT_80:$CONTAINER_PORT_80 \
+    --env 'GITLAB_PORT=$HOST_PORT_80' \
+    --env 'GITLAB_SSH_PORT=$HOST_PORT_22' \
+    --env 'GITLAB_SECRETS_DB_KEY_BASE=long-and-random-alpha-numeric-string-232323' \
+    --volume ${PWD}/data:/home/git/data \
+    sameersbn/gitlab:8.4.1
 }
 
 function help() {

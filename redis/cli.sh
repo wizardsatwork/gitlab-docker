@@ -1,15 +1,9 @@
 #!/bin/bash
 
 source ./ENV.sh
+source ../tasks.sh
 
 echo "container: ${CONTAINER_NAME}"
-
-function stop() {
-  echo "stopping ${CONTAINER_NAME}"
-  docker stop ${CONTAINER_NAME} \
-  && echo "stopped ${CONTAINER_NAME}" \
-  || echo "container ${CONTAINER_NAME} not started"
-}
 
 function build() {
   echo "docker building $CONTAINER_NAME"
@@ -26,34 +20,17 @@ function build() {
   echo "${CONTAINER_NAME} build finished"
 }
 
-function debug() {
-  echo "starting docker $CONTAINER_NAME container interactive debug session"
-
-  docker run -i -t ${CONTAINER_NAME}
-}
-
-function rm() {
-  echo "removing docker container $CONTAINER_NAME"
-
-  docker rm -f $CONTAINER_NAME || echo 'container does not exist'
-}
-
 function run() {
-  echo "starting docker container"
-
   rm
+
+  echo "starting docker container"
 
   docker run \
     --detach \
     --name ${CONTAINER_NAME} \
+    --volume ${PWD}/data:${DIR}/data \
     -p ${HOST_PORT}:${CONTAINER_PORT} \
     ${CONTAINER_NAME}
-}
-
-function debug() {
-  echo "starting debug session: ${CONTAINER_NAME}"
-
-  docker run -i -t ${CONTAINER_NAME} sh
 }
 
 function help() {
