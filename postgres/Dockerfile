@@ -21,11 +21,9 @@ RUN echo "@edge http://nl.alpinelinux.org/alpine/edge/main" >> /etc/apk/reposito
 ARG PORT
 ARG PGDATA
 
-ADD ./ENV.sh /ENV
-
 VOLUME ${PGDATA}
 
-COPY docker-entrypoint.sh /
+COPY docker-entrypoint.sh /docker-entrypoint.sh
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 

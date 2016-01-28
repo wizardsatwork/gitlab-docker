@@ -1,7 +1,6 @@
 #!/bin/sh
 
-source /ENV
-rm /ENV
+echo "yay start building postgres data ${GILAB_USER_PASS}"
 
 chown -R postgres "$PGDATA"
 
@@ -42,13 +41,30 @@ if [ -z "$(ls -A "$PGDATA")" ]; then
 
 
   if [ "$GITLAB_DB_USER" ]; then
-    gitlabSql="CREATE USER $GITLAB_DB_USER WITH PASSWORD '$GITLAB_DB_PASS';"
+    gitlabSql="CREATE ROLE $GITLAB_DB_USER WITH LOGIN CREATEDB PASSWORD '$GITLAB_DB_PASS';"
     echo $gitlabSql | gosu postgres postgres --single -jE
   fi
 
+  if [ "$GITLAB_DB_NAME" ]; then
+    createGitlabSql="CREATE DATABASE $GITLAB_DB_NAME;"
+    echo $createGitlabSql | gosu postgres postgres --single -jE
+    fixGitlabPermissions="GRANT ALL PRIVILEGES ON DATABASE ${GITLAB_DB_NAME} to ${GITLAB_DB_USER};"
+    echo $fixGitlabPermissions | gosu postgres postgres --single -jE
+    echo
+  fi
+
   if [ "REDMINE_DB_USER" ]; then
-    redmineSql="CREATE USER $REDMINE_DB_USER WITH PASSWORD '$REDMINE_DB_PASS';"
+    redmineSql="CREATE ROLE $REDMINE_DB_USER WITH LOGIN CREATEDB PASSWORD '$REDMINE_DB_PASS';"
     echo $redmineSql | gosu postgres postgres --single -jE
+  fi
+
+  if [ "$REDMINE_DB_NAME" ]; then
+    createRedmineSql="CREATE DATABASE $REDMINE_DB_NAME;"
+    echo $createRedmineSql | gosu postgres postgres --single -jE
+    fixGitlabPermissions="GRANT ALL PRIVILEGES ON DATABASE ${REDMINE_DB_NAME} to ${REDMINE_DB_USER};"
+    echo $fixGitlabPermissions | gosu postgres postgres --single -jE
+
+    echo
   fi
 
   echo
@@ -81,12 +97,13 @@ else
   echo
 
   if [ "$GITLAB_DB_USER" ]; then
-    gitlabSql="ALTER USER $GITLAB_DB_USER WITH PASSWORD '$GITLAB_DB_PASS';"
+    echo "alter user with password $GILAB_DB_PASS"
+    gitlabSql="ALTER USER $GITLAB_DB_USER WITH LOGIN CREATEDB PASSWORD '$GITLAB_DB_PASS';"
     echo $gitlabSql | gosu postgres postgres --single -jE
   fi
 
   if [ "REDMINE_DB_USER" ]; then
-    redmineSql="ALTER USER $REDMINE_DB_USER WITH PASSWORD '$REDMINE_DB_PASS';"
+    redmineSql="ALTER USER $REDMINE_DB_USER WITH LOGIN CREATEDB PASSWORD '$REDMINE_DB_PASS';"
     echo $redmineSql | gosu postgres postgres --single -jE
   fi
 fi

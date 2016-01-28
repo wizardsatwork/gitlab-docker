@@ -23,8 +23,18 @@ function run() {
     -i \
     --detach \
     --name ${CONTAINER_NAME} \
-    --env POSTGRES_PASSWORD=${PASS} \
-    --env POSTGRES_USER=${USER} \
+    --env "POSTGRES_PASSWORD=${SU_PASS}" \
+    --env "POSTGRES_USER=${SU_USER}" \
+    --env "DB=${DB}" \
+    --env "SU_PASS=${SU_PASS}" \
+    --env "SU_USER=${SU_USER}" \
+    --env "PGDATA=${PGDATA}" \
+    --env "GITLAB_DB_USER=$GITLAB_DB_USER" \
+    --env "GITLAB_DB_PASS=$GITLAB_DB_PASS" \
+    --env "GITLAB_DB_NAME=$GITLAB_DB_NAME" \
+    --env "REDMINE_DB_USER=$REDMINE_DB_USER" \
+    --env "REDMINE_DB_PASS=$REDMINE_DB_PASS" \
+    --env "REDMINE_DB_NAME=$REDMINE_DB_NAME" \
     --volume ${PWD}/data:/home/data/postgresql \
     -p ${HOST_PORT}:${CONTAINER_PORT} \
     ${CONTAINER_NAME}
