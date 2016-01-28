@@ -14,21 +14,13 @@ function rm() {
   docker rm -f ${CONTAINER_NAME} && echo "removed container" || echo "container does not exist"
 }
 
-#function build() {
-  #echo "building: ${CONTAINER_NAME}"
+function build() {
+  echo "building: ${CONTAINER_NAME}"
 
-  #docker build \
-    #-t ${CONTAINER_NAME} \
-    #--build-arg="USER=${USER}" \
-    #--build-arg="GROUP=${GROUP}" \
-    #--build-arg="WORKDIR=${WORKDIR}" \
-    #--build-arg="VERSION=${VERSION}" \
-    #--build-arg="MD5=${MD5}" \
-    #--build-arg="PORT=${CONTAINER_PORT}" \
-    #. # dot!
+  docker pull redmine
 
-  #echo "build finished"
-#}
+  echo "build finished"
+}
 
 function run() {
   rm

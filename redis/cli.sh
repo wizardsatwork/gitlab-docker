@@ -50,6 +50,12 @@ function run() {
     ${CONTAINER_NAME}
 }
 
+function debug() {
+  echo "starting debug session: ${CONTAINER_NAME}"
+
+  docker run -i -t ${CONTAINER_NAME} sh
+}
+
 function help() {
   echo "tasks for ${CONTAINER_NAME} container:"
   echo ""
