@@ -109,7 +109,7 @@ postgres-stop:
 
 # REDIS tasks
 
-redis: redis-build redis-run
+redis: redis-build redis-run redis-logs
 
 redis-build:
 	@cd redis; ./cli.sh build
@@ -132,7 +132,7 @@ redis-stop:
 
 # GITLAB tasks
 
-gitlab: gitlab-run
+gitlab: gitlab-run gitlab-logs
 
 gitlab-run:
 	@cd gitlab; ./cli.sh run
