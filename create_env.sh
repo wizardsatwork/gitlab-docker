@@ -115,7 +115,7 @@ export CONTAINER_PORT_22=22
 export HOSTNAME=gitlab.wiznwit.com
 export HOST_PORT_80=8000
 export HOST_PORT_443=4343
-export HOST_PORT_22=22
+export HOST_PORT_22=10022
 
 export GITLAB_DB_USER=gitlab
 export GITLAB_DB_PASS=${GENERATED_GITLAB_DB_PASS}
