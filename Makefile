@@ -77,7 +77,7 @@ gitlab: gitlab-run
 gitlab-run:
 	@cd gitlab; ./cli.sh run
 
-openresty: openresty-build openresty-run
+openresty: openresty-build openresty-run openresty-logs
 
 openresty-build:
 	@cd openresty; ./cli.sh build
