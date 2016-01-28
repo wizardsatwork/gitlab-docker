@@ -11,8 +11,6 @@ function build() {
   docker build \
     -t ${CONTAINER_NAME} \
     --build-arg="DIR=${DIR}" \
-    --build-arg="USER_ID=${USER_ID}" \
-    --build-arg="USER_NAME=${USER_NAME}" \
     --build-arg="PORT=${CONTAINER_PORT}" \
     --rm=true \
     . # dot!
@@ -28,7 +26,7 @@ function run() {
   docker run \
     --detach \
     --name ${CONTAINER_NAME} \
-    --volume ${PWD}/data:${DIR}/data \
+    --volume ${PWD}/data:/var/lib/redis \
     -p ${HOST_PORT}:${CONTAINER_PORT} \
     ${CONTAINER_NAME}
 }
