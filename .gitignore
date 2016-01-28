@@ -6,3 +6,4 @@ redmine/config
 gitlab/data/*
 redmine/data/*
 postgres/data/*
+redis/data/*
