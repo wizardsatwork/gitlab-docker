@@ -6,6 +6,7 @@ echo "container: ${CONTAINER_NAME}"
 
 function stop() {
   echo "stopping ${CONTAINER_NAME}"
+
   docker stop ${CONTAINER_NAME} \
   && echo "stopped ${CONTAINER_NAME}" \
   || echo "container ${CONTAINER_NAME} not started"
@@ -13,6 +14,7 @@ function stop() {
 
 function build {
   echo "build openresty ${CONTAINER_NAME}"
+
   docker build \
     -t=${CONTAINER_NAME} \
     --build-arg="TARGET_DIR=${TARGET_DIR}" \
@@ -22,6 +24,7 @@ function build {
     --build-arg="SBIN=${SBIN}" \
     --rm=true \
     . # dot!
+
   echo "build done"
 }
 
@@ -35,7 +38,10 @@ function debug() {
 
 function rm() {
   echo "removing container"
-  docker rm -f ${CONTAINER_NAME} || echo "container does not exist"
+
+  docker rm -f ${CONTAINER_NAME} \
+  && echo "container removed" \
+  || echo "container does not exist"
 }
 
 function run() {
