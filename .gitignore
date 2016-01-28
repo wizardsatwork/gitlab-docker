@@ -3,3 +3,6 @@ ENV.sh
 pass.tmp
 hosts/*
 redmine/config
+gitlab/data/*
+redmine/data/*
+postgres/data/*
