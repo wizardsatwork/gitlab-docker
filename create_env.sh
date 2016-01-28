@@ -110,11 +110,11 @@ export CONTAINER_NAME=magic-gitlab
 
 export CONTAINER_PORT_80=80
 export CONTAINER_PORT_443=443
-export CONTAINER_PORT_22=10022
+export CONTAINER_PORT_22=22
 
 export HOSTNAME=gitlab.wiznwit.com
-export HOST_PORT_80=80
-export HOST_PORT_443=443
+export HOST_PORT_80=8000
+export HOST_PORT_443=4343
 export HOST_PORT_22=22
 
 export GITLAB_DB_USER=gitlab
