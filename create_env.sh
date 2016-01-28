@@ -6,6 +6,8 @@ GENERATED_CWD="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 GENERATED_POSTGRES_PASS="$(base64 /dev/urandom | tr -dC '[:graph:]'  | stdbuf -o0 head --bytes 55)"
 GENERATED_REDIS_PASS="$(base64 /dev/urandom | tr -dC '[:graph:]'  | stdbuf -o0 head --bytes 55)"
+GENERATED_GITLAB_DB_PASS="$(base64 /dev/urandom | tr -dC '[:graph:]'  | stdbuf -o0 head --bytes 55)"
+GENERATED_REDMINE_DB_PASS="$(base64 /dev/urandom | tr -dC '[:graph:]'  | stdbuf -o0 head --bytes 55)"
 SECRET_KEY_BASE="$(base64 /dev/urandom | tr -dC '[:graph:]'  | stdbuf -o0 head --bytes 55)"
 
 POSTGRES_FILE=${GENERATED_CWD}/postgres/ENV.sh
@@ -48,6 +50,15 @@ export LANG=en_US.utf8
 
 # the directory the postgres data will be stored in
 export PGDATA=/home/data/postgresql
+
+export GITLAB_DB_USER=gitlab
+export GITLAB_DB_PASS=${GENERATED_GITLAB_DB_PASS}
+export GITLAB_DB_NAME=gitlabhq_production
+
+export REDMINE_DB_USER=redmine
+export REDMINE_DB_PASS=${GENERATED_REDMINE_DB_PASS}
+export REDMINE_DB_NAME=redmine_production
+
 
 " > ${POSTGRES_FILE}
 echo "wrote $POSTGRES_FILE"
@@ -99,12 +110,17 @@ export CONTAINER_NAME=magic-gitlab
 
 export CONTAINER_PORT_80=80
 export CONTAINER_PORT_443=443
-export CONTAINER_PORT_22=22
+export CONTAINER_PORT_22=10022
 
 export HOSTNAME=gitlab.wiznwit.com
 export HOST_PORT_80=80
 export HOST_PORT_443=443
 export HOST_PORT_22=22
+
+export GITLAB_DB_USER=gitlab
+export GITLAB_DB_PASS=${GENERATED_GITLAB_DB_PASS}
+export GITLAB_DB_NAME=gitlabhq_production
+
 " > ${GITLAB_FILE}
 echo "wrote $GITLAB_FILE"
 
@@ -120,6 +136,10 @@ export POSTGRES_CONTAINER_NAME=magic-postgres
 export USER=redmine
 export GROUP=redmine
 export WORKDIR=/usr/src/redmine
+
+export REDMINE_DB_USER=redmine
+export REDMINE_DB_PASS=${GENERATED_REDMINE_DB_PASS}
+export REDMINE_DB_NAME=redmine_production
 
 " > ${REDMINE_FILE}
 echo "wrote $REDMINE_FILE"
