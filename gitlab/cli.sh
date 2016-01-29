@@ -49,7 +49,7 @@ function run() {
     --env "DB_NAME=$GITLAB_DB_NAME" \
     --env "DB_USER=$GITLAB_DB_USER" \
     --env "DB_PASS=$GITLAB_DB_PASS" \
-    --env "GITLAB_SECRETS_DB_KEY_BASE=long-and-random-alpha-numeric-string-232323" \
+    --env "GITLAB_SECRETS_DB_KEY_BASE=$GITLAB_SECRETS_DB_KEY_BASE" \
     --volume $PWD/data:/home/git/data \
     sameersbn/gitlab:8.4.1
 }

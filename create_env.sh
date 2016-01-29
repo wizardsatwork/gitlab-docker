@@ -10,6 +10,13 @@ GENERATED_GITLAB_DB_PASS="$(base64 /dev/urandom | tr -dC '[:graph:]'  | stdbuf -
 GENERATED_REDMINE_DB_PASS="$(base64 /dev/urandom | tr -dC '[:graph:]'  | stdbuf -o0 head --bytes 55)"
 SECRET_KEY_BASE="$(base64 /dev/urandom | tr -dC '[:graph:]'  | stdbuf -o0 head --bytes 55)"
 
+if [ -f "./GITLAB_SECRETS_DB_KEY_BASE" ]; then
+  GITLAB_SECRETS_DB_KEY_BASE=$(cat ./GITLAB_SECRETS_DB_KEY_BASE)
+else
+  GITLAB_SECRETS_DB_KEY_BASE="$(base64 /dev/urandom | tr -dC '[:graph:]'  | stdbuf -o0 head --bytes 55)"
+  echo $GITLAB_SECRETS_DB_KEY_BASE >> ./GITLAB_SECRETS_DB_KEY_BASE
+fi
+
 POSTGRES_FILE=${GENERATED_CWD}/postgres/ENV.sh
 REDIS_FILE=${GENERATED_CWD}/redis/ENV.sh
 OPENRESTY_FILE=${GENERATED_CWD}/openresty/ENV.sh
@@ -24,8 +31,8 @@ POSTGRES_USER_NAME=postgres
 POSTGRES_DATABASE=postgres
 POSTGRES_PORT=5432
 
-GITLAB_PORT=2222
-REDMINE_PORT=2223
+GITLAB_HOST_PORT=2222
+REDMINE_HOST_PORT=2223
 echo "\
 #!/bin/bash
 
@@ -115,7 +122,7 @@ export CONTAINER_PORT_443=443
 export CONTAINER_PORT_22=22
 
 export HOSTNAME=gitlab.wiznwit.com
-export HOST_PORT_80=8000
+export HOST_PORT_80=$GITLAB_HOST_PORT
 export HOST_PORT_443=443
 export HOST_PORT_22=22
 
@@ -139,10 +146,11 @@ export USER=redmine
 export GROUP=redmine
 export WORKDIR=/usr/src/redmine
 
+export HOST_PORT=$REDMINE_HOST_PORT
+
 export REDMINE_DB_USER=redmine
 export REDMINE_DB_PASS=${GENERATED_REDMINE_DB_PASS}
 export REDMINE_DB_NAME=redmine_production
-
 " > ${REDMINE_FILE}
 echo "wrote $REDMINE_FILE"
 
