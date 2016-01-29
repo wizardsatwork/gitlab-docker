@@ -40,8 +40,9 @@ RUN apk add --update --virtual build-deps \
   openrc \
   lua5.1 \
   lua5.1-dev \
-  luarocks5.1 \
-  && rm -rf /var/cache/apk/*
+  luarocks5.1
+
+RUN rm -rf /var/cache/apk/*
 
 #install openresty
 RUN \
