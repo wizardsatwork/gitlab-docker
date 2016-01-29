@@ -29,7 +29,8 @@ function run() {
     -i \
     --detach \
     --name $CONTAINER_NAME \
-    -p $HOST_PORT:$CONTAINER_PORT \
+    -p $HOST_PORT_80:$CONTAINER_PORT_80 \
+    -p $HOST_PORT_443:$CONTAINER_PORT_443 \
     $CONTAINER_NAME
 }
 
