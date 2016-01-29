@@ -9,7 +9,7 @@ function build {
   echo "build $CONTAINER_NAME"
 
   docker build \
-    -t ${CONTAINER_NAME} \
+    -t=${CONTAINER_NAME} \
     --build-arg="TARGET_DIR=$TARGET_DIR" \
     --build-arg="PORT_80=$CONTAINER_PORT_80" \
     --build-arg="PORT_443=$CONTAINER_PORT_443" \
