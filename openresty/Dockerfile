@@ -12,9 +12,9 @@ ARG SBIN
 ARG PORT_80
 ARG PORT_443
 
-ENV PATH ${SBIN}:$EXPORT_PATH:$PATH \
-    LUA_PATH ?.lua;/usr/share/lua/5.1/?.lua;/usr/share/lua/5.1/?/init.lua;/usr/share/lua/5.1/init.lua;; \
-    LUA_CPATH ?;?.so;/usr/lib/lua/5.1/?.so;/usr/lib/lua/5.1/?/init.so;/usr/lib/lua/5.1/init.so;;
+ENV PATH ${SBIN}:$EXPORT_PATH:$PATH
+ENV LUA_PATH ?.lua;/usr/share/lua/5.1/?.lua;/usr/share/lua/5.1/?/init.lua;/usr/share/lua/5.1/init.lua;;
+ENV LUA_CPATH ?;?.so;/usr/lib/lua/5.1/?.so;/usr/lib/lua/5.1/?/init.so;/usr/lib/lua/5.1/init.so;;
 
 RUN echo "http://dl-4.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
 
