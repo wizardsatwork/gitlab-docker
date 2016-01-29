@@ -24,6 +24,8 @@ POSTGRES_USER_NAME=postgres
 POSTGRES_DATABASE=postgres
 POSTGRES_PORT=5432
 
+GITLAB_PORT=2222
+REDMINE_PORT=2223
 echo "\
 #!/bin/bash
 
@@ -98,8 +100,8 @@ export SBIN=/usr/local/openresty/nginx/sbin
 export CONTAINER_NAME=magic-resty
 export CONTAINER_PORT_80=8080
 export HOST_PORT_80=80
-export CONTAINER_PORT_443=4343
-export HOST_PORT_443=443
+export CONTAINER_PORT_443=443
+export HOST_PORT_443=4343
 " > ${OPENRESTY_FILE}
 echo "wrote ${OPENRESTY_FILE}"
 
@@ -113,7 +115,7 @@ export CONTAINER_PORT_443=443
 export CONTAINER_PORT_22=22
 
 export HOSTNAME=gitlab.wiznwit.com
-export HOST_PORT_80=80
+export HOST_PORT_80=8000
 export HOST_PORT_443=443
 export HOST_PORT_22=22
 
