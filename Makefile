@@ -52,8 +52,7 @@ env:
 
 deploy:
 	@${MAKE} postgres redis openresty
-	@${MAKE} gitlab
-	@${MAKE} remove-hashes
+	@${MAKE} gitlab redmine
 
 build:
 	@${MAKE} -j2 postgres-build redis-build
