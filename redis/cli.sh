@@ -3,19 +3,18 @@
 source ./ENV.sh
 source ../tasks.sh
 
-echo "container: ${CONTAINER_NAME}"
+echo "container: $CONTAINER_NAME"
 
 function build() {
   echo "docker building $CONTAINER_NAME"
 
   docker build \
-    -t ${CONTAINER_NAME} \
-    --build-arg="DIR=${DIR}" \
-    --build-arg="PORT=${CONTAINER_PORT}" \
-    --rm=true \
+    -t $CONTAINER_NAME \
+    --build-arg="DIR=$DIR" \
+    --build-arg="PORT=$CONTAINER_PORT" \
     . # dot!
 
-  echo "${CONTAINER_NAME} build finished"
+  echo "$CONTAINER_NAME build finished"
 }
 
 function run() {
@@ -25,14 +24,14 @@ function run() {
 
   docker run \
     --detach \
-    --name ${CONTAINER_NAME} \
-    --volume ${PWD}/data:/var/lib/redis \
-    -p ${HOST_PORT}:${CONTAINER_PORT} \
-    ${CONTAINER_NAME}
+    --name $CONTAINER_NAME \
+    --volume $PWD/data:/var/lib/redis \
+    -p $HOST_PORT:$CONTAINER_PORT \
+    $CONTAINER_NAME
 }
 
 function help() {
-  echo "tasks for ${CONTAINER_NAME} container:"
+  echo "tasks for $CONTAINER_NAME container:"
   echo ""
   echo "build - build docker container"
   echo "debug - connect to container shell"

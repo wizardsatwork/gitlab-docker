@@ -3,11 +3,11 @@
 source ./ENV.sh
 source ../tasks.sh
 
-echo "container: ${CONTAINER_NAME}"
+echo "container: $CONTAINER_NAME"
 
 
 function build() {
-  echo "building: ${CONTAINER_NAME}"
+  echo "building: $CONTAINER_NAME"
 
   docker pull redmine
 
@@ -17,14 +17,14 @@ function build() {
 function run() {
   rm
 
-  echo "run ${CONTAINER_NAME}"
+  echo "run $CONTAINER_NAME"
 
   docker run --detach \
     --hostname redmine.wiznwit.com \
     -p 3000:3000 \
-    --name ${CONTAINER_NAME} \
-    --volume ${PWD}/data:/usr/src/redmine/files \
-    --link ${POSTGRES_CONTAINER_NAME}:postgres \
+    --name $CONTAINER_NAME \
+    --volume $PWD/data:/usr/src/redmine/files \
+    --link $POSTGRES_CONTAINER_NAME:postgres \
     redmine
 
   echo "started docker container"

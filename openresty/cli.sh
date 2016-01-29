@@ -2,19 +2,19 @@
 
 source ./ENV.sh
 source ../tasks.sh
-echo "container: ${CONTAINER_NAME}"
+
+echo "container: $CONTAINER_NAME"
 
 function build {
-  echo "build openresty ${CONTAINER_NAME}"
+  echo "build $CONTAINER_NAME"
 
   docker build \
-    -t=${CONTAINER_NAME} \
-    --build-arg="TARGET_DIR=${TARGET_DIR}" \
-    --build-arg="PORT_80=${CONTAINER_PORT_80}" \
-    --build-arg="PORT_443=${CONTAINER_PORT_443}" \
-    --build-arg="VERSION=${VERSION}" \
-    --build-arg="SBIN=${SBIN}" \
-    --rm=true \
+    -t ${CONTAINER_NAME} \
+    --build-arg="TARGET_DIR=$TARGET_DIR" \
+    --build-arg="PORT_80=$CONTAINER_PORT_80" \
+    --build-arg="PORT_443=$CONTAINER_PORT_443" \
+    --build-arg="VERSION=$VERSION" \
+    --build-arg="SBIN=$SBIN" \
     . # dot!
 
   echo "build done"
@@ -22,13 +22,15 @@ function build {
 
 function run() {
   rm
+
   echo "starting container"
+
   docker run \
     -i \
     --detach \
-    --name ${CONTAINER_NAME} \
-    -p ${HOST_PORT}:${CONTAINER_PORT} \
-    ${CONTAINER_NAME}
+    --name $CONTAINER_NAME \
+    -p $HOST_PORT:$CONTAINER_PORT \
+    $CONTAINER_NAME
 }
 
 function help() {
