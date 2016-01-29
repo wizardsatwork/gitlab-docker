@@ -91,7 +91,7 @@ echo "\
 export OUT_DIR=./out
 export SRC_DIR=./src
 
-export PATH=/usr/local/openresty/nginx/sbin
+export EXPORT_PATH=/usr/local/openresty/nginx/sbin
 export VERSION=1.9.7.1
 export SRC_DIR=${SRC_DIR}/nginx
 export LUA_SRC_DIR=${SRC_DIR}/lua
