@@ -92,17 +92,20 @@ export PASS=${GENERATED_REDIS_PASS}
 " > ${REDIS_FILE}
 echo "wrote $REDIS_FILE"
 
+OUT_DIR="./out"
+SRC_DIR="./src"
+
 echo "\
 #!/bin/bash
 
-export OUT_DIR=./out
-export SRC_DIR=./src
+export OUT_DIR=$OUT_DIR
+export SRC_DIR=$SRC_DIR
 
 export EXPORT_PATH=/usr/local/openresty/nginx/sbin
 export VERSION=1.9.7.1
-export SRC_DIR=${SRC_DIR}/nginx
-export LUA_SRC_DIR=${SRC_DIR}/lua
-export HOST_SRC_DIR=${LUA_SRC_DIR}/hosts
+export TARGET_DIR=/home/openresty/
+export LUA_SRC_DIR=$SRC_DIR/lua
+export HOST_SRC_DIR=$LUA_SRC_DIR/hosts
 export SBIN=/usr/local/openresty/nginx/sbin
 export CONTAINER_NAME=magic-resty
 export CONTAINER_PORT_80=8080
@@ -127,7 +130,7 @@ export HOST_PORT_443=443
 export HOST_PORT_22=22
 
 export GITLAB_DB_USER=gitlab
-export GITLAB_DB_PASS=${GENERATED_GITLAB_DB_PASS}
+export GITLAB_DB_PASS=$GENERATED_GITLAB_DB_PASS
 export GITLAB_DB_NAME=gitlabhq_production
 
 export GITLAB_SECRETS_DB_KEY_BASE=$GITLAB_SECRETS_DB_KEY_BASE

@@ -74,7 +74,6 @@ ADD ./out ${TARGET_DIR}
 # add log directory and pipe it to stdout
 RUN mkdir -p ${TARGET_DIR}/logs \
   && ln -sf /dev/stdout ${TARGET_DIR}/logs/access.log
-  && ln -sf /dev/stderr ${TARGET_DIR}/logs/error.log
 
 # Expose ports
 EXPOSE ${PORT_80} ${PORT_443}
