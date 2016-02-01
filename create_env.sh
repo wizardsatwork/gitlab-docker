@@ -150,7 +150,8 @@ export USER=redmine
 export GROUP=redmine
 export WORKDIR=/usr/src/redmine
 
-export HOST_PORT=$REDMINE_HOST_PORT
+export HOST_PORT_80=$REDMINE_HOST_PORT
+export CONTAINER_PORT_80=3000
 
 export REDMINE_DB_USER=redmine
 export REDMINE_DB_PASS=${GENERATED_REDMINE_DB_PASS}

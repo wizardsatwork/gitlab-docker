@@ -20,8 +20,8 @@ function run() {
   echo "run $CONTAINER_NAME"
 
   docker run --detach \
-    --hostname redmine.wiznwit.com \
-    -p 3000:3000 \
+    --hostname $HOSTNAME \
+    -p $HOST_PORT_80:$CONTAINER_PORT_80 \
     --name $CONTAINER_NAME \
     --volume $PWD/data:/usr/src/redmine/files \
     --link $POSTGRES_CONTAINER_NAME:postgres \
