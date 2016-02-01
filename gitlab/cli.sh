@@ -17,9 +17,12 @@ function run-orig() {
   echo "run $CONTAINER_NAME"
   docker run --detach \
     --hostname $HOSTNAME \
-    --publish 0.0.0.0:$CONTAINER_PORT_443:$HOST_PORT_443 \
-    --publish 0.0.0.0:$CONTAINER_PORT_80:$HOST_PORT_80 \
-    --publish 0.0.0.0:$CONTAINER_PORT_22:$HOST_PORT_22 \
+    --publish $CONTAINER_PORT_443:$HOST_PORT_443 \
+    --publish $CONTAINER_PORT_80:$HOST_PORT_80 \
+    --publish $CONTAINER_PORT_22:$HOST_PORT_22 \
+    --env 'GITLAB_SSH_PORT=$HOST_PORT_22'\
+    --env 'GITLAB_PORT=$HOST_PORT_80' \
+    --volume /srv/docker/gitlab/gitlab:/home/git/data \
     --name $CONTAINER_NAME \
     --restart always \
     --volume config:/etc/gitlab \
