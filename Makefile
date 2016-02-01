@@ -100,7 +100,7 @@ postgres-debug:
 	@cd postgres; ./cli.sh debug
 
 postgres-rm:
-	@cd postgres; ./cli.sh rm
+	@cd postgres; ./cli.sh remove
 
 postgres-stop:
 	@cd postgres; ./cli.sh stop
@@ -123,7 +123,7 @@ redis-debug:
 	@cd redis; ./cli.sh debug
 
 redis-rm:
-	@cd redis; ./cli.sh rm
+	@cd redis; ./cli.sh remove
 
 redis-stop:
 	@cd redis; ./cli.sh stop
@@ -146,7 +146,7 @@ gitlab-logs:
 	@cd gitlab; ./cli.sh logs
 
 gitlab-rm:
-	@cd gitlab; ./cli.sh rm
+	@cd gitlab; ./cli.sh remove
 
 gitlab-stop:
 	@cd gitlab; ./cli.sh stop
@@ -168,7 +168,7 @@ openresty-debug:
 	@cd openresty; ./cli.sh debug
 
 openresty-rm:
-	@cd openresty; ./cli.sh rm
+	@cd openresty; ./cli.sh remove
 
 openresty-stop:
 	@cd openresty; ./cli.sh stop
@@ -191,7 +191,7 @@ redmine-debug:
 	@cd redmine; ./cli.sh debug
 
 redmine-rm:
-	@cd redmine; ./cli.sh rm
+	@cd redmine; ./cli.sh remove
 
 redmine-stop:
 	@cd redmine; ./cli.sh stop

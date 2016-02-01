@@ -9,7 +9,7 @@ function build() {
   echo "docker building $CONTAINER_NAME"
 
   docker build \
-    -t $CONTAINER_NAME \
+    --detach \
     --build-arg="DIR=$DIR" \
     --build-arg="PORT=$CONTAINER_PORT" \
     . # dot!
@@ -18,7 +18,7 @@ function build() {
 }
 
 function run() {
-  rm
+  remove
 
   echo "starting docker container"
 
@@ -26,7 +26,7 @@ function run() {
     --detach \
     --name $CONTAINER_NAME \
     --volume $PWD/data:/var/lib/redis \
-    -p $HOST_PORT:$CONTAINER_PORT \
+    --publish $HOST_PORT:$CONTAINER_PORT \
     $CONTAINER_NAME
 }
 
@@ -36,7 +36,7 @@ function help() {
   echo "build - build docker container"
   echo "debug - connect to container shell"
   echo "run - run container"
-  echo "rm - remove container"
+  echo "remove - remove container"
   echo "help - this help text"
 }
 

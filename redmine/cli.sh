@@ -5,7 +5,6 @@ source ../tasks.sh
 
 echo "container: $CONTAINER_NAME"
 
-
 function build() {
   echo "building: $CONTAINER_NAME"
 
@@ -15,13 +14,14 @@ function build() {
 }
 
 function run() {
-  rm
+  remove
 
   echo "run $CONTAINER_NAME"
 
-  docker run --detach \
+  docker run \
+    --detach \
     --hostname $HOSTNAME \
-    -p $HOST_PORT_80:$CONTAINER_PORT_80 \
+    --publish $HOST_PORT_80:$CONTAINER_PORT_80 \
     --name $CONTAINER_NAME \
     --volume $PWD/data:/usr/src/redmine/files \
     --link $POSTGRES_CONTAINER_NAME:postgres \
@@ -37,7 +37,7 @@ function help() {
   echo ""
   echo "commands:"
   echo "run - run docker container"
-  echo "rm - remove container"
+  echo "remove - remove container"
   echo "build - build container"
   echo "stop - stop container"
 }

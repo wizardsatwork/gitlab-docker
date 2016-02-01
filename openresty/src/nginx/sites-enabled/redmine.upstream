@@ -1,0 +1,5 @@
+upstream redmine {
+  server redmine.wiznwit.com:8080;
+
+  server redmine.wiznwit.com:8889;
+}

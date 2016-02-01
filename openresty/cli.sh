@@ -19,7 +19,7 @@ function build {
   nginx-build
 
   docker build \
-    -t=$CONTAINER_NAME \
+    --tag=$CONTAINER_NAME \
     --build-arg="TARGET_DIR=$TARGET_DIR" \
     --build-arg="PORT_80=$CONTAINER_PORT_80" \
     --build-arg="PORT_443=$CONTAINER_PORT_443" \
@@ -31,16 +31,15 @@ function build {
 }
 
 function run() {
-  rm
+  remove
 
   echo "starting container"
 
   docker run \
-    -i \
     --detach \
     --name $CONTAINER_NAME \
-    -p $HOST_PORT_80:$CONTAINER_PORT_80 \
-    -p $HOST_PORT_443:$CONTAINER_PORT_443 \
+    --publish $HOST_PORT_80:$CONTAINER_PORT_80 \
+    --publish $HOST_PORT_443:$CONTAINER_PORT_443 \
     $CONTAINER_NAME
 }
 
@@ -51,8 +50,12 @@ function asset-build() {
 }
 
 function nginx-build() {
+  echo "building nginx sources"
+
   mkdir -p $OUT_DIR/
   cp -r $NGINX_SRC_DIR/* $OUT_DIR/
+
+  echo "nginx config finished"
 }
 
 function moon-build() {
@@ -70,7 +73,13 @@ function moon-watch() {
 }
 
 function moon-lint() {
-  @moonc -l $LUA_SRC_DIR/*
+  moonc -l $LUA_SRC_DIR/*
+}
+
+function clean() {
+  echo "cleaning up"
+
+  rm -rf ./out
 }
 
 function help() {
@@ -81,7 +90,8 @@ function help() {
   echo "commands:"
   echo "build - docker builds the container"
   echo "run - docker runs the container"
-  echo "rm - docker remove the container"
+  echo "remove - docker remove the container"
+  echo "clean - rm the out directory"
   echo "logs - tail the docker logs"
   echo "debug - connect to the container"
 }

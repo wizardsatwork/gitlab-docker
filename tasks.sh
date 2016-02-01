@@ -13,14 +13,16 @@ function stop() {
 }
 
 function debug() {
-  echo "connecting to container $CONTAINER_NAME"
+  $PWD/cli.sh build debug
+
+  echo "connecting to container $CONTAINER_NAME-debug"
   docker run \
-    -i \
-    --name $CONTAINER_NAME \
-    --entrypoint=sh $CONTAINER_NAME
+    --interactive \
+    --name "$CONTAINER_NAME-debug" \
+    --entrypoint=sh "$CONTAINER_NAME-debug"
 }
 
-function rm() {
+function remove() {
   echo "removing container $CONTAINER_NAME"
   docker rm -f $CONTAINER_NAME && echo "removed container" || echo "container does not exist"
 }

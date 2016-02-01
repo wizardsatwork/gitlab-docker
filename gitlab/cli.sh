@@ -12,11 +12,12 @@ function build() {
 }
 
 function run-orig() {
-  rm
+  remove
 
   echo "run $CONTAINER_NAME"
+
   docker run --detach \
-    --hostname $HOSTNAME \
+    --detach \
     --publish $CONTAINER_PORT_443:$HOST_PORT_443 \
     --publish $CONTAINER_PORT_80:$HOST_PORT_80 \
     --publish $CONTAINER_PORT_22:$HOST_PORT_22 \
@@ -34,7 +35,7 @@ function run-orig() {
 }
 
 function run() {
-  rm
+  remove
 
   echo "starting container $CONTAINER_NAME"
 
@@ -65,7 +66,7 @@ function help() {
   echo ""
   echo "commands:"
   echo "run - run docker container"
-  echo "rm - remove container"
+  echo "remove - remove container"
   echo "update - update container"
   echo "stop - stop container"
 }
