@@ -112,6 +112,8 @@ export CONTAINER_PORT_80=8080
 export HOST_PORT_80=80
 export CONTAINER_PORT_443=443
 export HOST_PORT_443=4343
+
+$(node ips.js)
 " > ${OPENRESTY_FILE}
 echo "wrote ${OPENRESTY_FILE}"
 
@@ -158,6 +160,5 @@ export REDMINE_DB_PASS=${GENERATED_REDMINE_DB_PASS}
 export REDMINE_DB_NAME=redmine_production
 " > ${REDMINE_FILE}
 echo "wrote $REDMINE_FILE"
-
 
 echo "finished env generation"
