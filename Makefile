@@ -176,7 +176,7 @@ openresty-stop:
 
 # REDMINE tasks
 
-redmine: redmine-run redmine-logs
+redmine: redmine-build redmine-run redmine-logs
 
 redmine-run:
 	@cd redmine; ./cli.sh run
