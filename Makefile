@@ -3,6 +3,7 @@ HOSTS_DIR = hosts
 .PHONY: \
 	help \
 	all \
+	ips \
 	env \
 	deploy \
 	build \
@@ -51,21 +52,31 @@ env:
 	@./create_env.sh
 
 deploy:
-	@${MAKE} postgres redis openresty
-	@${MAKE} gitlab redmine
+	@${MAKE} \
+		env \
+		ips \
+		build \
+		run
 
 build:
-	@${MAKE} -j2 postgres-build redis-build
-	@${MAKE} openresty-build
-	@${MAKE} gitlab-build
-	@${MAKE} redmine-build
+	@${MAKE} \
+		redis-build \
+		postgres-build \
+		gitlab-build \
+		redmine-build \
+		openresty-build
 
 run:
-	@${MAKE} postgres-run
-	@${MAKE} redis-run
-	@${MAKE} openresty-run
-	@${MAKE} gitlab-run
-	@${MAKE} redmine-run
+	@${MAKE} \
+		postgres-run \
+		redis-run \
+		gitlab-run \
+		redmine-run \
+		ips \
+		openresty-run
+
+ips:
+	@./create_ip_env.sh
 
 clean:
 	@echo "removing configuration files:"

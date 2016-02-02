@@ -1,5 +1,6 @@
 out
 ENV.sh
+IPS.sh
 pass.tmp
 hosts/*
 redmine/config
