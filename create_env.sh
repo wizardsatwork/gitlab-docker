@@ -113,7 +113,7 @@ export HOST_PORT_80=80
 export CONTAINER_PORT_443=443
 export HOST_PORT_443=4343
 
-$(node ips.js)
+$(python ips.py)
 " > ${OPENRESTY_FILE}
 echo "wrote ${OPENRESTY_FILE}"
 
