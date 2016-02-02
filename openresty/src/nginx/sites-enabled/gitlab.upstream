@@ -1,5 +1,0 @@
-upstream gitlab {
-  server gitlab.wiznwit.com;
-
-  server gitlab.wiznwit.com:8888;
-}

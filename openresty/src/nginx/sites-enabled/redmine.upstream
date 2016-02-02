@@ -1,5 +1,0 @@
-upstream redmine {
-  server redmine.wiznwit.com;
-
-  server redmine.wiznwit.com:8889;
-}

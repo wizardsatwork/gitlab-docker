@@ -61,7 +61,7 @@ function nginx-build() {
 
   sed \
     --in-place \
-    -e "s/|HOST_IP|/$MAGIC_REDMINE_IP/g" \
+    -e "s/|HOST_IP|/$MAGIC_REDMINE_IP:3000/g" \
     $OUT_DIR/sites-enabled/redmine
 
   echo "nginx config finished"
