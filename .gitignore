@@ -8,3 +8,4 @@ redmine/data/*
 postgres/data/*
 redis/data/*
 GITLAB_SECRETS_DB_KEY_BASE
+GITLAB_GITHUB_KEYS
