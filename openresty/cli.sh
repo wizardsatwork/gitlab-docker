@@ -54,6 +54,15 @@ function nginx-build() {
 
   mkdir -p $OUT_DIR/
   cp -r $NGINX_SRC_DIR/* $OUT_DIR/
+  sed \
+    --in-place \
+    -e "s/|HOST_IP|/$MAGIC_GITLAB_IP/g" \
+    $OUT_DIR/sites-enabled/gitlab
+
+  sed \
+    --in-place \
+    -e "s/|HOST_IP|/$MAGIC_REDMINE_IP/g" \
+    $OUT_DIR/sites-enabled/redmine
 
   echo "nginx config finished"
 }
