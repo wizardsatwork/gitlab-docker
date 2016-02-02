@@ -9,7 +9,6 @@ function build() {
   echo "docker building $CONTAINER_NAME"
 
   docker build \
-    --detach \
     --build-arg="DIR=$DIR" \
     --build-arg="PORT=$CONTAINER_PORT" \
     . # dot!
