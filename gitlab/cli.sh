@@ -54,6 +54,8 @@ function run() {
     --env "DB_USER=$GITLAB_DB_USER" \
     --env "DB_PASS=$GITLAB_DB_PASS" \
     --env "GITLAB_SECRETS_DB_KEY_BASE=$GITLAB_SECRETS_DB_KEY_BASE" \
+    --env "OAUTH_GITHUB_API_KEY=$OAUTH_GITHUB_API_KEY" \
+    --env "OAUTH_GITHUB_APP_SECRET=$OAUTH_GITHUB_APP_SECRET" \
     --volume $PWD/data:/home/git/data \
     sameersbn/gitlab:8.4.1
 }
