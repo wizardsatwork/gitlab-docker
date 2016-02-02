@@ -24,5 +24,8 @@ function debug() {
 
 function remove() {
   echo "removing container $CONTAINER_NAME"
-  docker rm -f $CONTAINER_NAME && echo "removed container" || echo "container does not exist"
+  stop \
+  && docker rm $CONTAINER_NAME \
+  && echo "removed $CONTAINER_NAME" \
+  || echo "container $CONTAINER_NAME does not exist"
 }
