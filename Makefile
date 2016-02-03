@@ -68,8 +68,9 @@ build:
 
 run:
 	@${MAKE} \
-		postgres-run \
 		redis-run \
+		postgres-run \
+		ips \
 		gitlab-run \
 		redmine-run \
 		ips \
