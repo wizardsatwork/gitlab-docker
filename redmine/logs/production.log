@@ -1,0 +1,48 @@
+DEPRECATION WARNING: You didn't set `secret_key_base`. Read the upgrade documentation to learn more about this new config option. (called from process_client at /home/redmine/data/tmp/bundle/ruby/2.1.0/gems/unicorn-5.0.1/lib/unicorn/http_server.rb:562)
+Started GET "/" for 127.0.0.1 at 2016-02-03 20:22:14 +0000
+Processing by WelcomeController#index as HTML
+WARNING: Can't mass-assign protected attributes for AnonymousUser: login
+	app/models/user.rb:739:in `anonymous'
+	app/models/user.rb:731:in `current'
+	app/controllers/application_controller.rb:93:in `user_setup'
+  Current user: anonymous
+  Rendered welcome/index.html.erb within layouts/base (7.7ms)
+Completed 200 OK in 262ms (Views: 166.9ms | ActiveRecord: 21.9ms)
+DEPRECATION WARNING: You didn't set `secret_key_base`. Read the upgrade documentation to learn more about this new config option. (called from process_client at /home/redmine/data/tmp/bundle/ruby/2.1.0/gems/unicorn-5.0.1/lib/unicorn/http_server.rb:562)
+Started GET "/" for 127.0.0.1 at 2016-02-03 20:23:20 +0000
+Processing by WelcomeController#index as HTML
+  Current user: anonymous
+  Rendered welcome/index.html.erb within layouts/base (8.1ms)
+Completed 200 OK in 251ms (Views: 168.7ms | ActiveRecord: 15.7ms)
+Started GET "/" for 127.0.0.1 at 2016-02-03 20:23:22 +0000
+Processing by WelcomeController#index as HTML
+  Current user: anonymous
+  Rendered welcome/index.html.erb within layouts/base (0.6ms)
+Completed 200 OK in 12ms (Views: 4.4ms | ActiveRecord: 2.8ms)
+DEPRECATION WARNING: You didn't set `secret_key_base`. Read the upgrade documentation to learn more about this new config option. (called from process_client at /home/redmine/data/tmp/bundle/ruby/2.1.0/gems/unicorn-5.0.1/lib/unicorn/http_server.rb:562)
+Started GET "/login?back_url=http%3A%2F%2Fredmine.wiznwit.com%2F" for 127.0.0.1 at 2016-02-04 15:53:30 +0000
+Processing by AccountController#login as HTML
+  Parameters: {"back_url"=>"http://redmine.wiznwit.com/"}
+  Current user: anonymous
+  Rendered account/login.html.erb within layouts/base (5.9ms)
+Completed 200 OK in 257ms (Views: 186.1ms | ActiveRecord: 18.6ms)
+DEPRECATION WARNING: You didn't set `secret_key_base`. Read the upgrade documentation to learn more about this new config option. (called from process_client at /home/redmine/data/tmp/bundle/ruby/2.1.0/gems/unicorn-5.0.1/lib/unicorn/http_server.rb:562)
+Started GET "/login?back_url=http%3A%2F%2Fredmine.wiznwit.com%2F" for 127.0.0.1 at 2016-02-04 15:53:35 +0000
+Processing by AccountController#login as HTML
+  Parameters: {"back_url"=>"http://redmine.wiznwit.com/"}
+  Current user: anonymous
+  Rendered account/login.html.erb within layouts/base (5.6ms)
+Completed 200 OK in 231ms (Views: 168.6ms | ActiveRecord: 15.4ms)
+Started GET "/login?back_url=http%3A%2F%2Fredmine.wiznwit.com%2F" for 127.0.0.1 at 2016-02-04 15:53:44 +0000
+Processing by AccountController#login as HTML
+  Parameters: {"back_url"=>"http://redmine.wiznwit.com/"}
+  Current user: anonymous
+  Rendered account/login.html.erb within layouts/base (1.1ms)
+Completed 200 OK in 13ms (Views: 8.8ms | ActiveRecord: 1.0ms)
+DEPRECATION WARNING: You didn't set `secret_key_base`. Read the upgrade documentation to learn more about this new config option. (called from process_client at /home/redmine/data/tmp/bundle/ruby/2.1.0/gems/unicorn-5.0.1/lib/unicorn/http_server.rb:562)
+Started GET "/login?back_url=http%3A%2F%2Fredmine.wiznwit.com%2F" for 127.0.0.1 at 2016-02-04 16:00:08 +0000
+Processing by AccountController#login as HTML
+  Parameters: {"back_url"=>"http://redmine.wiznwit.com/"}
+  Current user: anonymous
+  Rendered account/login.html.erb within layouts/base (4.6ms)
+Completed 200 OK in 222ms (Views: 170.7ms | ActiveRecord: 7.9ms)

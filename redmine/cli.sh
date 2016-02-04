@@ -1,6 +1,7 @@
 #!/bin/bash
 
 source ./ENV.sh
+source ./IPS.sh
 source ../tasks.sh
 
 echo "container: $CONTAINER_NAME"
@@ -8,14 +9,14 @@ echo "container: $CONTAINER_NAME"
 function build() {
   echo "building: $CONTAINER_NAME"
 
-  docker pull redmine
+  docker pull sameersbn/redmine:3.2.0-4
 
   mkdir -p ./data/plugins
 
   if [ -d "./data/plugins/redmine_milestones" ]; then
     echo "redmine_milestones already installed"
   else
-    git clone \
+    #git clone \
       git://github.com/k41n/redmine_milestones.git \
       ./data/plugins/redmine_milestones \
     || echo "milestones plugin already downloaded"
@@ -37,11 +38,29 @@ function run() {
     --volume=$PWD/data:/home/redmine/data \
     --volume=$PWD/logs:/home/redmine/redmine/log/ \
     --link $POSTGRES_CONTAINER_NAME:postgres \
-    --env='REDMINE_FETCH_COMMITS=true' \
-    --env='NGINX_ENABLED=false' \
-    $CONTAINER_NAME
+    --env="DB_NAME=$REDMINE_DB_NAME" \
+    --env="DB_USER=$REDMINE_DB_USER" \
+    --env="DB_PASS=$REDMINE_DB_PASS" \
+    --env="DB_ADAPTER=postgresql" \
+    --env="DB_HOST=$MAGIC_POSTGRES_IP" \
+    --env="DB_PORT=$POSTGRES_PORT" \
+    --env='REDMINE_SUDO_MODE_ENABLED=true' \
+    --env='REDMINE_FETCH_COMMITS=hourly' \
+    --env='REDMINE_BACKUP_SCHEDULE=daily' \
+    sameersbn/redmine:3.2.0-4
 
   echo "started docker container"
+}
+
+function backup() {
+  docker stop $CONTAINER_NAME && docker rm $CONTAINER_NAME
+
+  docker run \
+    --name $CONTAINER_NAME-backup \
+    --interactive \
+    --tty \
+    --rm \
+    sameersbn/redmine:3.2.0-4 app:backup:create
 }
 
 function help() {
