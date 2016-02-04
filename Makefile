@@ -5,6 +5,7 @@ REDIS_DIR=redis
 POSTGRES_DIR=postgres
 GITLAB_DIR=gitlab
 REDMINE_DIR=redmine
+BACKUP_DIR=../backups
 
 .PHONY: \
 	help \
@@ -101,6 +102,24 @@ stop:
 		gitlab-stop \
 		redmine-stop
 
+backup: gitlab-backup redmine-backup
+	echo "creating backup"
+
+	mkdir -p ${BACKUP_DIR}
+
+	echo "start copying files"
+	cp -rf ./* ${BACKUP_DIR}
+	echo "finished copying files"
+
+	echo "committing changes"
+	cd ${BACKUP_DIR}; \
+	git init && \
+	git add -A ./* && \
+	git commit -m "backup $$(date +\%Y-\%m-\%d-\%H:\%M:\%S)" ./*
+
+	echo "backup finished"
+
+
 # POSTGRES tasks
 
 postgres: postgres-build postgres-run postgres-logs
@@ -169,6 +188,9 @@ gitlab-rm:
 gitlab-stop:
 	@cd ${GITLAB_DIR}; ./cli.sh stop
 
+gitlab-backup:
+	@cd ${GITLAB_DIR}; ./cli.sh backup
+
 # OPENRESTY tasks
 
 openresty: openresty-build openresty-run openresty-logs
@@ -216,6 +238,9 @@ redmine-rm:
 
 redmine-stop:
 	@cd ${REDMINE_DIR}; ./cli.sh stop
+
+redmine-backup:
+	@cd ${REDMINE_DIR}; ./cli.sh backup
 
 # host tasks
 

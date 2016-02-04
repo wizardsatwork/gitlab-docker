@@ -1,5 +1,7 @@
 #!/bin/bash
 
+GITLAB_VERSION=8.4.1
+
 source ./ENV.sh
 source ../tasks.sh
 
@@ -34,7 +36,32 @@ function run() {
     --env "OAUTH_GITHUB_API_KEY=$OAUTH_GITHUB_API_KEY" \
     --env "OAUTH_GITHUB_APP_SECRET=$OAUTH_GITHUB_APP_SECRET" \
     --volume $PWD/data:/home/git/data \
-    sameersbn/gitlab:8.4.1
+    sameersbn/gitlab:$GITLAB_VERSION
+}
+
+function backup() {
+  echo "backup $CONTAINER_NAME"
+
+  remove
+
+  docker run \
+    --name $CONTAINER_NAME \
+    --interactive \
+    --tty \
+    --rm \
+    --link magic-postgres:postgresql \
+    --link magic-redis:redisio \
+    --env "GITLAB_HOST=$HOSTNAME" \
+    --env "GITLAB_PORT=$HOST_PORT_80" \
+    --env "GITLAB_SSH_PORT=$HOST_PORT_22" \
+    --env "DB_NAME=$GITLAB_DB_NAME" \
+    --env "DB_USER=$GITLAB_DB_USER" \
+    --env "DB_PASS=$GITLAB_DB_PASS" \
+    --env "GITLAB_SECRETS_DB_KEY_BASE=$GITLAB_SECRETS_DB_KEY_BASE" \
+    --env "OAUTH_GITHUB_API_KEY=$OAUTH_GITHUB_API_KEY" \
+    --env "OAUTH_GITHUB_APP_SECRET=$OAUTH_GITHUB_APP_SECRET" \
+    --volume $PWD/data:/home/git/data \
+    sameersbn/gitlab:$GITLAB_VERSION app:rake gitlab:backup:create
 }
 
 function help() {

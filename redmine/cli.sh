@@ -53,14 +53,27 @@ function run() {
 }
 
 function backup() {
-  docker stop $CONTAINER_NAME && docker rm $CONTAINER_NAME
+  echo "backup $CONTAINER_NAME"
+
+  remove
 
   docker run \
-    --name $CONTAINER_NAME-backup \
+    --name $CONTAINER_NAME \
     --interactive \
     --tty \
     --rm \
+    --volume=$PWD/data:/home/redmine/data \
+    --volume=$PWD/logs:/home/redmine/redmine/log/ \
+    --link $POSTGRES_CONTAINER_NAME:postgres \
+    --env="DB_NAME=$REDMINE_DB_NAME" \
+    --env="DB_USER=$REDMINE_DB_USER" \
+    --env="DB_PASS=$REDMINE_DB_PASS" \
+    --env="DB_ADAPTER=postgresql" \
+    --env="DB_HOST=$MAGIC_POSTGRES_IP" \
+    --env="DB_PORT=$POSTGRES_PORT" \
     sameersbn/redmine:3.2.0-4 app:backup:create
+
+  run
 }
 
 function help() {
