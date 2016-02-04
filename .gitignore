@@ -1,12 +1,6 @@
-out
 ENV.sh
 IPS.sh
 pass.tmp
 hosts/*
-redmine/config
-gitlab/data/*
-redmine/data/*
-postgres/data/*
-redis/data/*
 GITLAB_SECRETS_DB_KEY_BASE
 GITLAB_GITHUB_KEYS
