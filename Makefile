@@ -1,4 +1,10 @@
-HOSTS_DIR = hosts
+HOSTS_DIR=hosts
+
+OPENRESTY_DIR=openresty
+REDIS_DIR=redis
+POSTGRES_DIR=postgres
+GITLAB_DIR=gitlab
+REDMINE_DIR=redmine
 
 .PHONY: \
 	help \
@@ -100,22 +106,22 @@ stop:
 postgres: postgres-build postgres-run postgres-logs
 
 postgres-build:
-	@cd postgres; ./cli.sh build
+	@cd ${POSTGRES_DIR}; ./cli.sh build
 
 postgres-run:
-	@cd postgres; ./cli.sh run
+	@cd ${POSTGRES_DIR}; ./cli.sh run
 
 postgres-logs:
-	@cd postgres; ./cli.sh logs
+	@cd ${POSTGRES_DIR}; ./cli.sh logs
 
 postgres-debug:
-	@cd postgres; ./cli.sh debug
+	@cd ${POSTGRES_DIR}; ./cli.sh debug
 
 postgres-rm:
-	@cd postgres; ./cli.sh remove
+	@cd ${POSTGRES_DIR}; ./cli.sh remove
 
 postgres-stop:
-	@cd postgres; ./cli.sh stop
+	@cd ${POSTGRES_DIR}; ./cli.sh stop
 
 
 # REDIS tasks
@@ -123,22 +129,22 @@ postgres-stop:
 redis: redis-build redis-run redis-logs
 
 redis-build:
-	@cd redis; ./cli.sh build
+	@cd ${REDIS_DIR}; ./cli.sh build
 
 redis-run:
-	@cd redis; ./cli.sh run
+	@cd ${REDIS_DIR}; ./cli.sh run
 
 redis-logs:
-	@cd redis; ./cli.sh logs
+	@cd ${REDIS_DIR}; ./cli.sh logs
 
 redis-debug:
-	@cd redis; ./cli.sh debug
+	@cd ${REDIS_DIR}; ./cli.sh debug
 
 redis-rm:
-	@cd redis; ./cli.sh remove
+	@cd ${REDIS_DIR}; ./cli.sh remove
 
 redis-stop:
-	@cd redis; ./cli.sh stop
+	@cd ${REDIS_DIR}; ./cli.sh stop
 
 
 # GITLAB tasks
@@ -146,44 +152,47 @@ redis-stop:
 gitlab: gitlab-run gitlab-logs
 
 gitlab-run:
-	@cd gitlab; ./cli.sh run
+	@cd ${GITLAB_DIR}; ./cli.sh run
 
 gitlab-build:
-	@cd gitlab; ./cli.sh build
+	@cd ${GITLAB_DIR}; ./cli.sh build
 
 gitlab-debug:
-	@cd gitlab; ./cli.sh debug
+	@cd ${GITLAB_DIR}; ./cli.sh debug
 
 gitlab-logs:
-	@cd gitlab; ./cli.sh logs
+	@cd ${GITLAB_DIR}; ./cli.sh logs
 
 gitlab-rm:
-	@cd gitlab; ./cli.sh remove
+	@cd ${GITLAB_DIR}; ./cli.sh remove
 
 gitlab-stop:
-	@cd gitlab; ./cli.sh stop
+	@cd ${GITLAB_DIR}; ./cli.sh stop
 
 # OPENRESTY tasks
 
 openresty: openresty-build openresty-run openresty-logs
 
 openresty-build:
-	@cd openresty; ./cli.sh build
+	@cd ${OPENRESTY_DIR}; ./cli.sh build
 
 openresty-run:
-	@cd openresty; ./cli.sh run
+	@cd ${OPENRESTY_DIR}; ./cli.sh run
 
 openresty-logs:
 	cd openresty; ./cli.sh logs
 
 openresty-debug:
-	@cd openresty; ./cli.sh debug
+	@cd ${OPENRESTY_DIR}; ./cli.sh debug
 
 openresty-rm:
-	@cd openresty; ./cli.sh remove
+	@cd ${OPENRESTY_DIR}; ./cli.sh remove
+
+openresty-clean:
+	@cd ${OPENRESTY_DIR}; ./cli.sh clean
 
 openresty-stop:
-	@cd openresty; ./cli.sh stop
+	@cd ${OPENRESTY_DIR}; ./cli.sh stop
 
 
 # REDMINE tasks
@@ -191,22 +200,22 @@ openresty-stop:
 redmine: redmine-build redmine-run redmine-logs
 
 redmine-run:
-	@cd redmine; ./cli.sh run
+	@cd ${REDMINE_DIR}; ./cli.sh run
 
 redmine-logs:
-	@cd redmine; ./cli.sh logs
+	@cd ${REDMINE_DIR}; ./cli.sh logs
 
 redmine-build:
-	@cd redmine; ./cli.sh build
+	@cd ${REDMINE_DIR}; ./cli.sh build
 
 redmine-debug:
-	@cd redmine; ./cli.sh debug
+	@cd ${REDMINE_DIR}; ./cli.sh debug
 
 redmine-rm:
-	@cd redmine; ./cli.sh remove
+	@cd ${REDMINE_DIR}; ./cli.sh remove
 
 redmine-stop:
-	@cd redmine; ./cli.sh stop
+	@cd ${REDMINE_DIR}; ./cli.sh stop
 
 # host tasks
 
