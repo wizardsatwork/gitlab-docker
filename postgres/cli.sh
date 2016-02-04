@@ -8,7 +8,7 @@ echo "container: $CONTAINER_NAME"
 function build {
   echo "build postgres database $CONTAINER_NAME"
   docker build \
-  -t=${CONTAINER_NAME} \
+  --tag=$CONTAINER_NAME \
   --build-arg="PORT=$CONTAINER_PORT" \
   --build-arg="PGDATA=$PGDATA" \
   . # dot!
