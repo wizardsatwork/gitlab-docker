@@ -7,6 +7,7 @@ LUA_SRC_DIR="$SRC_DIR/lua"
 LIB_NAME=resty
 
 source ./ENV.sh
+source ./IPS.sh
 source ../tasks.sh
 
 echo "container: $CONTAINER_NAME"
@@ -61,7 +62,7 @@ function nginx-build() {
 
   sed \
     --in-place \
-    -e "s/|HOST_IP|/$MAGIC_REDMINE_IP:3000/g" \
+    -e "s/|HOST_IP|/$MAGIC_REDMINE_IP/g" \
     $OUT_DIR/sites-enabled/redmine
 
   echo "nginx config finished"
