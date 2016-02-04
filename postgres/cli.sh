@@ -1,7 +1,7 @@
 #!/bin/bash
 
 source ./ENV.sh
-source ../tasks.sh
+source ../.bin/tasks.sh
 
 echo "container: $CONTAINER_NAME"
 

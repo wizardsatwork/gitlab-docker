@@ -4,3 +4,4 @@ pass.tmp
 hosts/*
 GITLAB_SECRETS_DB_KEY_BASE
 GITLAB_GITHUB_KEYS
+crontab.txt

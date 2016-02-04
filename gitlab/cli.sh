@@ -3,7 +3,7 @@
 GITLAB_VERSION=8.4.1
 
 source ./ENV.sh
-source ../tasks.sh
+source ../.bin/tasks.sh
 
 function build() {
   echo "building: $CONTAINER_NAME"

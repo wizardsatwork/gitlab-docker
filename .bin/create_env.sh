@@ -2,7 +2,7 @@
 
 echo "Start env generation"
 
-GENERATED_CWD="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+GENERATED_CWD="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/.."
 
 GENERATED_POSTGRES_PASS="$(base64 /dev/urandom | tr -dC '[:graph:]'  | stdbuf -o0 head --bytes 55)"
 GENERATED_REDIS_PASS="$(base64 /dev/urandom | tr -dC '[:graph:]'  | stdbuf -o0 head --bytes 55)"
