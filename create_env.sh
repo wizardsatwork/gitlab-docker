@@ -67,8 +67,7 @@ export GITLAB_DB_NAME=gitlabhq_production
 export REDMINE_DB_USER=redmine
 export REDMINE_DB_PASS=${GENERATED_REDMINE_DB_PASS}
 export REDMINE_DB_NAME=redmine_production
-
-
+export REDMINE_DB_PORT=$POSTGRES_PORT
 " > ${POSTGRES_FILE}
 echo "wrote $POSTGRES_FILE"
 
