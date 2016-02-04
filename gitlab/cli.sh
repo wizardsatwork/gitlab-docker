@@ -62,6 +62,8 @@ function backup() {
     --env "OAUTH_GITHUB_APP_SECRET=$OAUTH_GITHUB_APP_SECRET" \
     --volume $PWD/data:/home/git/data \
     sameersbn/gitlab:$GITLAB_VERSION app:rake gitlab:backup:create
+
+  run
 }
 
 function help() {
