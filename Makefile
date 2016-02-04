@@ -119,6 +119,8 @@ backup: gitlab-backup redmine-backup
 
 	echo "backup finished"
 
+	${MAKE} ips openresty
+
 
 # POSTGRES tasks
 
