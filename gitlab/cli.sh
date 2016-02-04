@@ -11,29 +11,6 @@ function build() {
   echo "build finished"
 }
 
-function run-orig() {
-  remove
-
-  echo "run $CONTAINER_NAME"
-
-  docker run --detach \
-    --detach \
-    --publish $CONTAINER_PORT_443:$HOST_PORT_443 \
-    --publish $CONTAINER_PORT_80:$HOST_PORT_80 \
-    --publish $CONTAINER_PORT_22:$HOST_PORT_22 \
-    --env 'GITLAB_SSH_PORT=$HOST_PORT_22'\
-    --env 'GITLAB_PORT=$HOST_PORT_80' \
-    --volume /srv/docker/gitlab/gitlab:/home/git/data \
-    --name $CONTAINER_NAME \
-    --restart always \
-    --volume config:/etc/gitlab \
-    --volume logs:/var/log/gitlab \
-    --volume data:/var/opt/gitlab \
-    gitlab/gitlab-ce:latest
-
-  echo "started docker container"
-}
-
 function run() {
   remove
 
