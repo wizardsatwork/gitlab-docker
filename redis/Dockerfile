@@ -4,7 +4,7 @@
 FROM alpine:3.3
 
 MAINTAINER Wizards & Witches <dev@wiznwit.com>
-ENV REFRESHED_AT 2016-24-01
+ENV REFRESHED_AT 2016-21-02
 
 RUN echo "http://dl-4.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
 RUN apk update && \

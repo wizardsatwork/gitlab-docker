@@ -1,10 +1,10 @@
-# wizardsatwork/grundstein/resty dockerfile
+# wizardsatwork/grundstein/openresty dockerfile
 # VERSION 0.0.1
 
 FROM alpine:3.3
 
 MAINTAINER Wizards & Witches <dev@wiznwit.com>
-ENV REFRESHED_AT 2016-24-01
+ENV REFRESHED_AT 2016-21-02
 
 ARG TARGET_DIR
 ARG VERSION
