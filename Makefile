@@ -5,6 +5,7 @@ REDIS_DIR=redis
 POSTGRES_DIR=postgres
 GITLAB_DIR=gitlab
 REDMINE_DIR=redmine
+MONGO_DIR=mongodb
 BACKUP_DIR=../backups
 
 .PHONY: \
@@ -41,6 +42,12 @@ BACKUP_DIR=../backups
 	gitlab-logs \
 	gitlab-rm \
 	gitlab-debug \
+	mongo \
+	mongo-build \
+	mongo-run \
+	mongo-logs \
+	mongo-rm \
+	mongo-debug \
 	redmine \
 	redmine-build \
 	redmine-run \
@@ -55,15 +62,18 @@ BACKUP_DIR=../backups
 
 all: help
 
-env:
-	@./bin/create_env.sh
-
 deploy:
 	@${MAKE} \
 		env \
 		ips \
 		build \
 		run
+
+env:
+	@./bin/create_env.sh
+
+ips:
+	@./bin/create_ip_env.sh
 
 build:
 	@${MAKE} \
@@ -82,9 +92,6 @@ run:
 		redmine-run \
 		ips \
 		openresty-run
-
-ips:
-	@./bin/create_ip_env.sh
 
 clean:
 	@echo "removing configuration files:"
@@ -246,6 +253,29 @@ redmine-stop:
 
 redmine-backup:
 	@cd ${REDMINE_DIR}; ./cli.sh backup
+
+
+# MONGODB tasks
+
+mongo: mongo-build mongo-run mongo-logs
+
+mongo-run:
+	@cd ${MONGO_DIR}; ./cli.sh run
+
+mongo-logs:
+	@cd ${MONGO_DIR}; ./cli.sh logs
+
+mongo-build:
+	@cd ${MONGO_DIR}; ./cli.sh build
+
+mongo-debug:
+	@cd ${MONGO_DIR}; ./cli.sh debug
+
+mongo-rm:
+	@cd ${MONGO_DIR}; ./cli.sh remove
+
+mongo-stop:
+	@cd ${MONGO_DIR}; ./cli.sh stop
 
 # host tasks
 

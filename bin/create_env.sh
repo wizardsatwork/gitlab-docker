@@ -8,6 +8,7 @@ GENERATED_POSTGRES_PASS="$(base64 /dev/urandom | tr -dC '[:graph:]'  | stdbuf -o
 GENERATED_REDIS_PASS="$(base64 /dev/urandom | tr -dC '[:graph:]'  | stdbuf -o0 head --bytes 55)"
 GENERATED_GITLAB_DB_PASS="$(base64 /dev/urandom | tr -dC '[:graph:]'  | stdbuf -o0 head --bytes 55)"
 GENERATED_REDMINE_DB_PASS="$(base64 /dev/urandom | tr -dC '[:graph:]'  | stdbuf -o0 head --bytes 55)"
+GENERATED_MONGO_DB_PASS="$(base64 /dev/urandom | tr -dC '[:graph:]'  | stdbuf -o0 head --bytes 55)"
 SECRET_KEY_BASE="$(base64 /dev/urandom | tr -dC '[:graph:]'  | stdbuf -o0 head --bytes 55)"
 
 if [ -f "./GITLAB_SECRETS_DB_KEY_BASE" ]; then
@@ -27,12 +28,15 @@ REDMINE_DB_CONFIG_FILE=${REDMINE_CONFIG_DIR}/database.yml
 REDMINE_SECRET_CONFIG_FILE=${REDMINE_CONFIG_DIR}/secret.yml
 REDMINE_RAILS_ENV=production
 
+MONGODB_FILE=${GENERATED_CWD}/mongodb/ENV.sh
+
 POSTGRES_USER_NAME=postgres
 POSTGRES_DATABASE=postgres
 POSTGRES_PORT=5432
 
 GITLAB_HOST_PORT=8888
 REDMINE_HOST_PORT=8889
+
 echo "\
 #!/bin/bash
 
@@ -159,5 +163,20 @@ export REDMINE_DB_PASS=${GENERATED_REDMINE_DB_PASS}
 export REDMINE_DB_NAME=redmine_production
 " > ${REDMINE_FILE}
 echo "wrote $REDMINE_FILE"
+
+
+echo "\
+export CONTAINER_NAME=magic-mongodb
+export HOST_PORT_27017
+export CONTAINER_PORT_27017
+
+export CONTAINER_PORT_28017
+
+export HOST_PORT_28017
+export MONGODB_USER='rocketchat'
+export MONGODB_DATABASE='rocketchat'
+export MONGODB_PASS=${GENERATED_MONGODB_PASS}
+" > ${MONGODB_FILE}
+echo "wrote $MONGODB_FILE"
 
 echo "finished env generation"
