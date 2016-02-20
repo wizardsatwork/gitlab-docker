@@ -56,7 +56,7 @@ BACKUP_DIR=../backups
 all: help
 
 env:
-	@.bin/create_env.sh
+	@./bin/create_env.sh
 
 deploy:
 	@${MAKE} \
@@ -84,7 +84,7 @@ run:
 		openresty-run
 
 ips:
-	@.bin/create_ip_env.sh
+	@./bin/create_ip_env.sh
 
 clean:
 	@echo "removing configuration files:"
@@ -122,7 +122,7 @@ backup: gitlab-backup redmine-backup
 	${MAKE} ips openresty
 
 init:
-	@.bin/init.sh
+	@./bin/init.sh
 
 
 # POSTGRES tasks

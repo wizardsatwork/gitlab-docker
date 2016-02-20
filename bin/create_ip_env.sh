@@ -9,14 +9,14 @@ REDMINE_FILE=$GENERATED_CWD/redmine/IPS.sh
 
 echo "\
 #!/bin/bash
-$(python .bin/ips.py)
+$(python ./bin/ips.py)
 " > $OPENRESTY_FILE
 
 echo "wrote $OPENRESTY_FILE"
 
 echo "\
 #!/bin/bash
-$(python .bin/ips.py)
+$(python ./bin/ips.py)
 " > $REDMINE_FILE
 
 echo "wrote $REDMINE_FILE"

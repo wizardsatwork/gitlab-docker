@@ -2,7 +2,7 @@
 
 source ./ENV.sh
 source ./IPS.sh
-source ../.bin/tasks.sh
+source ../bin/tasks.sh
 
 echo "container: $CONTAINER_NAME"
 
