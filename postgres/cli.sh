@@ -41,16 +41,20 @@ function run() {
 }
 
 function help() {
-  echo "USAGE:"
+  echo "Container: $CONTAINER_NAME"
+  echo ""
+  echo "Usage:"
   echo ""
   echo './cli.sh $command'
   echo ""
   echo "commands:"
-  echo "build - docker builds the container"
-  echo "run - docker runs the container"
-  echo "remove - docker remove the container"
-  echo "logs - tail the docker logs"
-  echo "debug - connect to the container"
+  echo "build  - build docker container"
+  echo "run    - run docker container"
+  echo "remove - remove container"
+  echo "logs   - tail the container logs"
+  echo "debug  - connect to container debug session"
+  echo "stop   - stop container"
+  echo "help   - this help text"
 }
 
 if [ $1 ]

@@ -66,17 +66,22 @@ function backup() {
   run
 }
 
+
 function help() {
-  echo "${CONTAINER_NAME}"
+  echo "Container: $CONTAINER_NAME"
+  echo ""
   echo "Usage:"
   echo ""
   echo './cli.sh $command'
   echo ""
   echo "commands:"
-  echo "run - run docker container"
+  echo "build  - build docker container"
+  echo "run    - run docker container"
   echo "remove - remove container"
-  echo "update - update container"
-  echo "stop - stop container"
+  echo "logs   - tail the container logs"
+  echo "debug  - connect to container debug session"
+  echo "stop   - stop container"
+  echo "help   - this help text"
 }
 
 if [ $1 ]

@@ -93,17 +93,25 @@ function clean() {
 }
 
 function help() {
+  echo "Container: $CONTAINER_NAME"
+  echo ""
   echo "USAGE:"
   echo ""
   echo './cli.sh $command'
   echo ""
   echo "commands:"
-  echo "build - docker builds the container"
-  echo "run - docker runs the container"
+  echo "build  - docker builds the container"
+  echo "run    - docker runs the container"
   echo "remove - docker remove the container"
-  echo "clean - rm the out directory"
-  echo "logs - tail the docker logs"
-  echo "debug - connect to the container"
+  echo "clean  - rm the out directory"
+  echo "logs   - tail the docker logs"
+  echo "debug  - connect to the container"
+  echo ""
+  echo "lua commands:"
+  echo "moon-build - build lua/moon sources"
+  echo "moon-lint  - run lua/moon linter"
+  echo "moon-watch - start lua watch task"
+  echo "clean      - remove lua build"
 }
 
 if [ $1 ]
