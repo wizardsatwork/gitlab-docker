@@ -9,6 +9,7 @@ GENERATED_REDIS_PASS="$(base64 /dev/urandom | tr -dC '[:graph:]'  | stdbuf -o0 h
 GENERATED_GITLAB_DB_PASS="$(base64 /dev/urandom | tr -dC '[:graph:]'  | stdbuf -o0 head --bytes 55)"
 GENERATED_REDMINE_DB_PASS="$(base64 /dev/urandom | tr -dC '[:graph:]'  | stdbuf -o0 head --bytes 55)"
 GENERATED_MONGO_DB_PASS="$(base64 /dev/urandom | tr -dC '[:graph:]'  | stdbuf -o0 head --bytes 55)"
+GENERATED_ROCKETCHAT_DB_PASS="$(base64 /dev/urandom | tr -dC '[:graph:]'  | stdbuf -o0 head --bytes 55)"
 SECRET_KEY_BASE="$(base64 /dev/urandom | tr -dC '[:graph:]'  | stdbuf -o0 head --bytes 55)"
 
 if [ -f "./GITLAB_SECRETS_DB_KEY_BASE" ]; then
@@ -29,6 +30,7 @@ REDMINE_SECRET_CONFIG_FILE=${REDMINE_CONFIG_DIR}/secret.yml
 REDMINE_RAILS_ENV=production
 
 MONGODB_FILE=${GENERATED_CWD}/mongodb/ENV.sh
+ROCKETCHAT_FILE=${GENERATED_CWD}/rocketchat/ENV.sh
 
 POSTGRES_USER_NAME=postgres
 POSTGRES_DATABASE=postgres
@@ -42,8 +44,13 @@ REDMINE_DB_USER=redmine
 REDMINE_DB_PASS=${GENERATED_REDMINE_DB_PASS}
 REDMINE_DB_NAME=redmine_production
 
+ROCKETCHAT_DB_USER=rocketchat
+ROCKETCHAT_DB_DATABASE=rocketchat
+ROCKETCHAT_DB_PASS=$GENERATED_ROCKETCHAT_DB_PASS
+
 GITLAB_HOST_PORT=8888
 REDMINE_HOST_PORT=8889
+ROCKETCHAT_HOST_PORT=8890
 
 echo "\
 #!/bin/bash
@@ -180,10 +187,26 @@ export CONTAINER_PORT_27017=27017
 export CONTAINER_PORT_28017=28017
 export HOST_PORT_28017=28017
 
-export MONGODB_USER=$MONGODB_USER
-export MONGODB_DATABASE=$MONGODB_DATABASE
-export MONGODB_PASS=$MONGODB_PASS
+export ROCKETCHAT_DB_USER=$ROCKETCHAT_DB_USER
+export ROCKETCHAT_DB_NAME=$ROCKETCHAT_DB_DATABASE
+export ROCKETCHAT_DB_PASS=$ROCKETCHAT_DB_PASS
 " > ${MONGODB_FILE}
 echo "wrote $MONGODB_FILE"
+
+echo "\
+#!/bin/bash
+
+export CONTAINER_NAME=magic-rocketchat
+
+export CONTAINER_PORT_3000=3000
+export HOST_PORT_3000=ROCKETCHAT_HOST_PORT
+export HOSTNAME=rocket.wiznwit.com
+
+export ROCKETCHAT_DB_USER=$ROCKETCHAT_DB_USER
+export ROCKETCHAT_DB_USER=$ROCKETCHAT_DB_PASS
+export ROCKETCHAT_DB_NAME=$ROCKETCHAT_DB_NAME
+" > ${ROCKETCHAT_FILE}
+echo "wrote $ROCKETCHAT_FILE"
+
 
 echo "finished env generation"
