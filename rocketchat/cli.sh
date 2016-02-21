@@ -20,7 +20,7 @@ function run() {
     --detach \
     --name rocketchat \
     --publish $ROCKETCHAT_HOST_PORT_3000:$ROCKETCHAT_CONTAINER_PORT_3000 \
-    --env ROOT_URL=http://rocket.wiznwit.com \
+    --env ROOT_URL=$ROCKETCHAT_URL \
     --link magic-mongodb:db \
     rocket.chat
 }
