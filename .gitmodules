@@ -10,3 +10,6 @@
 [submodule "gitlab"]
 	path = gitlab
 	url = https://github.com/grundstein/gitlab.git
+[submodule "redmine"]
+	path = redmine
+	url = https://github.com/grundstein/redmine.git
