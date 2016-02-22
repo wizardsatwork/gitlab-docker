@@ -27,32 +27,17 @@ function update_submodules() {
   echo "update submodules"
 
   #!/bin/bash
-  for module in "${$SUB_MODULES[@]}"
+  for module in "${SUB_MODULES[@]}"
   do
-    cd $module && \
+    cd $PWD/$module && \
     git fetch && \
-    git merge origin/master
+    git merge origin/master && \
+    cd ..
   done
-}
-
-function crontab () {
-  CRONTAB_FILE=$PWD/crontab.txt
-
-  echo "creating crontab.txt"
-
-  rm -f $CRONTAB_FILE
-
-  echo "23 05 * * * \"cd ${PWD} && make backup\" > /dev/null" >> $CRONTAB_FILE
-
-  echo "writing to crontab"
-  crontab $CRONTAB_FILE
-
-  echo "crontab setup done"
 }
 
 function all() {
   init_submodules
-  crontab
 }
 
 if [ $1 ]
