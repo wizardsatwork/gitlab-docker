@@ -8,7 +8,7 @@ function add_submodules() {
   for module in "${SUB_MODULES[@]}"
   do
     echo "adding submodule: $module"
-    git submodule add https://github.com/grundstein/$module.git
+    git submodule add git@github.com:grundstein/$module
     git commit -am 'add submodule: $module'
     echo "finished submodule: $module"
   done

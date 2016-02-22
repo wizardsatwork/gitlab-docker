@@ -1,18 +1,18 @@
 [submodule "redis"]
 	path = redis
-	url = https://github.com/grundstein/redis.git
+	url = git@github.com:grundstein/redis.git
 [submodule "postgres"]
 	path = postgres
-	url = https://github.com/grundstein/postgres.git
+	url = git@github.com:grundstein/postgres.git
 [submodule "mongodb"]
 	path = mongodb
-	url = https://github.com/grundstein/mongodb.git
+	url = git@github.com:grundstein/mongodb.git
 [submodule "gitlab"]
 	path = gitlab
-	url = https://github.com/grundstein/gitlab.git
+	url = git@github.com:grundstein/gitlab.git
 [submodule "redmine"]
 	path = redmine
-	url = https://github.com/grundstein/redmine.git
+	url = git@github.com:grundstein/redmine.git
 [submodule "rocketchat"]
 	path = rocketchat
-	url = https://github.com/grundstein/rocketchat.git
+	url = git@github.com:grundstein/rocketchat.git
