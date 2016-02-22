@@ -7,3 +7,6 @@
 [submodule "mongodb"]
 	path = mongodb
 	url = https://github.com/grundstein/mongodb.git
+[submodule "gitlab"]
+	path = gitlab
+	url = https://github.com/grundstein/gitlab.git
