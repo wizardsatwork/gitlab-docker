@@ -129,8 +129,16 @@ backup: gitlab-backup redmine-backup
 	${MAKE} ips openresty
 
 init:
-	@./bin/init.sh
+	@./bin/init.sh all
 
+init_submodules:
+	@./bin/init.sh init_submodules
+
+crontab:
+	@./bin/init.sh crontab
+
+update_submodules:
+	@./bin/init.sh update_submodules
 
 # POSTGRES tasks
 
