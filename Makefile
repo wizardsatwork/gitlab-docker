@@ -135,7 +135,7 @@ init_submodules:
 	@./bin/init.sh init_submodules
 
 crontab:
-	@./bin/init.sh crontab
+	@./bin/create_crontab.sh
 
 update_submodules:
 	@./bin/init.sh update_submodules
