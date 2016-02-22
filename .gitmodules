@@ -4,3 +4,6 @@
 [submodule "postgres"]
 	path = postgres
 	url = https://github.com/grundstein/postgres.git
+[submodule "mongodb"]
+	path = mongodb
+	url = https://github.com/grundstein/mongodb.git
